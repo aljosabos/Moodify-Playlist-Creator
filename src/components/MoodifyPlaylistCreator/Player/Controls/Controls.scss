@@ -1,0 +1,17 @@
+.Controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+
+  &__content button {
+    border: none;
+    background-color: transparent;
+    margin-right: 8px;
+    cursor: pointer;
+  }
+
+  svg {
+    font-size: 20px;
+  }
+}

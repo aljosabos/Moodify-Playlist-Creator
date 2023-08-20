@@ -1,0 +1,44 @@
+.Track {
+  &__info {
+    display: flex;
+    gap: 20px;
+
+    &__text {
+      color: #f50;
+
+      &-title {
+        color: #fff;
+        font-weight: 100;
+        font-size: 32px;
+        margin-bottom: 0;
+        padding: 2px;
+        line-height: 37px;
+        background-color: rgba(0, 0, 0, 0.8);
+      }
+    }
+
+    &__img {
+      width: 250px;
+      height: 250px;
+      background: #1e1e1e;
+
+      img {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+        vertical-align: middle;
+      }
+
+      &-icon {
+        font-size: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 80px;
+        width: 80px;
+        border-radius: 50%;
+        background: #989898;
+      }
+    }
+  }
+}
