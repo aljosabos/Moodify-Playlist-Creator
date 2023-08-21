@@ -6,8 +6,9 @@
 
   &-time {
     color: #333;
-    font-size: 16px;
+    font-size: 17px;
     line-height: 46px;
+    font-weight: bold;
 
     &.current {
       color: #f50;
@@ -20,7 +21,7 @@
     position: relative;
     background: #ccc;
     width: 100%;
-    height: 2px;
+    height: 5px;
     border-radius: 2px;
     cursor: pointer;
 

@@ -4,6 +4,12 @@
   align-items: center;
   margin-top: 10px;
 
+  &__content {
+    width: 250px;
+    display: flex;
+    justify-content: space-around;
+  }
+
   &__content button {
     border: none;
     background-color: transparent;
@@ -12,6 +18,16 @@
   }
 
   svg {
-    font-size: 20px;
+    font-size: 24px;
+  }
+
+  &__volume {
+    &-btn {
+      border: none;
+      border-radius: 5px;
+      padding: 5px 8px;
+      margin-right: 8px;
+      cursor: pointer;
+    }
   }
 }

@@ -34,7 +34,7 @@ export default function ProgressBar({
         defaultValue={0}
       />
       <span className="ProgressBar-time">
-        {formatSecondsToSongDuration(Math.ceil(duration))}
+        {formatSecondsToSongDuration(Math.floor(duration))}
       </span>
     </div>
   );

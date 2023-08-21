@@ -4,16 +4,19 @@
     gap: 20px;
 
     &__text {
-      color: #f50;
+      color: #6c402b;
+      font-size: 24px;
+      font-weight: bold;
 
       &-title {
         color: #fff;
         font-weight: 100;
-        font-size: 32px;
+        font-size: 34px;
         margin-bottom: 0;
-        padding: 2px;
+        padding: 10px;
         line-height: 37px;
         background-color: rgba(0, 0, 0, 0.8);
+        border-radius: 5px;
       }
     }
 
@@ -21,7 +24,10 @@
       width: 250px;
       height: 250px;
       background: #1e1e1e;
-
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 5px;
       img {
         object-fit: cover;
         width: 100%;

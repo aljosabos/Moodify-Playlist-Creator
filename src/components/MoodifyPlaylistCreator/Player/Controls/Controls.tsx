@@ -4,6 +4,7 @@ import {
   useEffect,
   useRef,
   useCallback,
+  ChangeEvent,
 } from "react";
 import "./Controls.scss";
 import {
@@ -14,6 +15,8 @@ import {
   IoPlaySharp,
   IoPauseSharp,
 } from "react-icons/io5";
+
+import { IoMdVolumeHigh, IoMdVolumeOff, IoMdVolumeLow } from "react-icons/io";
 import { SKIP_TIME } from "../../../../assets/constants";
 import { useAutoPlayNextSong } from "../../../../hooks/useAutoPlayNextSong";
 
@@ -37,6 +40,8 @@ export default function Controls({
   playlistLength,
 }: IControlProps) {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [volume, setVolume] = useState(60);
+  const [muteVolume, setMuteVolume] = useState(false);
 
   const playAnimationRef = useRef<number | null>();
 
@@ -84,6 +89,13 @@ export default function Controls({
     playAnimationRef.current = requestAnimationFrame(repeat);
   }, [isPlaying, audioRef, repeat]);
 
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = volume / 100;
+      audioRef.current.muted = muteVolume;
+    }
+  }, [volume, audioRef, muteVolume]);
+
   const togglePlay = () => {
     setIsPlaying((currentStatus) => !currentStatus);
   };
@@ -103,6 +115,7 @@ export default function Controls({
       setTrackIndex((prev) => prev - 1);
     }
   };
+
   const handleNext = () => {
     if (trackIndex >= playlistLength - 1) {
       setTrackIndex(0);
@@ -110,6 +123,23 @@ export default function Controls({
       setTrackIndex((prev) => prev + 1);
     }
   };
+
+  const handleChangeVolume = (e: ChangeEvent<HTMLInputElement>) => {
+    setVolume(parseInt((e.target as HTMLInputElement).value));
+  };
+
+  const toggleMuteVolume = () => {
+    setMuteVolume((prev) => !prev);
+  };
+
+  const volumeIcon =
+    muteVolume || volume < 5 ? (
+      <IoMdVolumeOff />
+    ) : volume < 40 ? (
+      <IoMdVolumeLow />
+    ) : (
+      <IoMdVolumeHigh />
+    );
 
   useAutoPlayNextSong(audioRef, handleNext);
 
@@ -132,6 +162,22 @@ export default function Controls({
         <button onClick={handleNext}>
           <IoPlaySkipForwardSharp />
         </button>
+      </div>
+
+      <div className="Controls__volume">
+        <button onClick={toggleMuteVolume} className="Controls__volume-btn">
+          {volumeIcon}
+        </button>
+        <input
+          style={{
+            background: `linear-gradient(to right, #f50 ${volume}%, #ccc ${volume}%)`,
+          }}
+          type="range"
+          min={0}
+          max={100}
+          value={volume}
+          onChange={handleChangeVolume}
+        />
       </div>
     </div>
   );
