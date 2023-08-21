@@ -6,12 +6,32 @@ import "./Track.scss";
 interface ITrackProps {
   currentTrack: ICurrentTrack;
   audioRef: MutableRefObject<HTMLAudioElement | null>;
+  setDuration: React.Dispatch<React.SetStateAction<number>>;
+  progressBarRef: MutableRefObject<HTMLInputElement | null>;
 }
 
-export default function Track({ currentTrack, audioRef }: ITrackProps) {
+export default function Track({
+  currentTrack,
+  audioRef,
+  setDuration,
+  progressBarRef,
+}: ITrackProps) {
+  /////
+  const onLoadedMetadata = () => {
+    if (audioRef.current) {
+      const seconds = audioRef.current.duration;
+      setDuration(seconds);
+      (progressBarRef.current as HTMLInputElement).max = seconds.toString();
+    }
+  };
+
   return (
     <div className="Track">
-      <audio src={currentTrack.src} ref={audioRef} />
+      <audio
+        src={currentTrack.src}
+        ref={audioRef}
+        onLoadedMetadata={onLoadedMetadata}
+      />
       <div className="Track__info">
         <div className="audio-image">
           {/* {currentTrack.thumbnail ? (

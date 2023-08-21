@@ -10,15 +10,22 @@ export default function Player() {
   const [currentTrack, setCurrentTrack] = useState<ICurrentTrack>(
     happyTracks[0]
   );
+  const [timeProgress, setTimeProgress] = useState(0);
+  const [duration, setDuration] = useState(0);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const progressBarRef = useRef<HTMLInputElement | null>(null);
 
   return (
     <div className="Player">
       <div className="Player__content">
-        <Track currentTrack={currentTrack} audioRef={audioRef} />
-        <Controls audioRef={audioRef} />
-        <ProgressBar />
+        <Track {...{ currentTrack, audioRef, setDuration, progressBarRef }} />
+        <Controls
+          {...{ progressBarRef, audioRef, duration, setTimeProgress }}
+        />
+        <ProgressBar
+          {...{ progressBarRef, audioRef, timeProgress, duration }}
+        />
       </div>
     </div>
   );
