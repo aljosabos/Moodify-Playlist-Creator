@@ -23,7 +23,7 @@ export default function MoodifyPlaylistCreator() {
 
   return (
     <div className="Root">
-      <Player />
+      <Player {...{tracks}}/>
       <MoodSelector {...{ changeMood }} />
       <Playlist {...{ tracks }} />
     </div>

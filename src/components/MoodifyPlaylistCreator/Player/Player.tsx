@@ -6,12 +6,14 @@ import { happyTracks } from "../../../assets/happyTracks";
 import { ITrack } from "../../../types/types";
 import "./Player.scss";
 
-export default function Player() {
-  const playlistLength = happyTracks.length;
+interface IPlayerProps {
+  tracks: ITrack[];
+}
+
+export default function Player({ tracks }: IPlayerProps) {
+  const playlistLength = tracks.length;
   const [trackIndex, setTrackIndex] = useState(0);
-  const [currentTrack, setCurrentTrack] = useState<ITrack>(
-    happyTracks[trackIndex]
-  );
+  const [currentTrack, setCurrentTrack] = useState<ITrack>(tracks[trackIndex]);
   const [timeProgress, setTimeProgress] = useState(0);
   const [duration, setDuration] = useState(0);
 
@@ -22,10 +24,16 @@ export default function Player() {
     setCurrentTrack(happyTracks[trackIndex]);
   }, [trackIndex]);
 
+  useEffect(() => {
+    if (tracks) setCurrentTrack(tracks[trackIndex]);
+  }, [tracks]);
+
   return (
     <div className="Player">
       <div className="Player__content">
-        <Track {...{ currentTrack, audioRef, setDuration, progressBarRef }} />
+        {currentTrack && (
+          <Track {...{ currentTrack, audioRef, setDuration, progressBarRef }} />
+        )}
         <Controls
           {...{
             progressBarRef,
@@ -35,7 +43,6 @@ export default function Player() {
             trackIndex,
             setTrackIndex,
             playlistLength,
-            setCurrentTrack,
             setDuration,
           }}
         />
