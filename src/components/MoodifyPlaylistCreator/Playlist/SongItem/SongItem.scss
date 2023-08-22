@@ -1,0 +1,41 @@
+.SongItem {
+  border-bottom: 1px solid black;
+  padding: 4px;
+  font-size: 16px;
+  display: flex;
+  align-items: flex-end;
+  transition: all 0.2s;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f3efef;
+  }
+
+  &-artist {
+    margin-right: 30px;
+    margin-left: 5px;
+    width: 20%;
+  }
+
+  &__btns {
+    display: flex;
+    margin-left: auto;
+
+    button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: none;
+      background-color: transparent;
+      gap: 4px;
+      transition: all 0.2s;
+      padding: 7px;
+      border-radius: 5px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #fff5f5;
+      }
+    }
+  }
+}

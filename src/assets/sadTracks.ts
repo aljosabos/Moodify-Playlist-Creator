@@ -11,60 +11,61 @@ import TheDawnsAreQuietHere from "./mp3/sad/А зори здесь тихие �
 
 export const sadTracks = [
   {
+    id: "e1n4w2",
     title: "Someone Like You",
     src: SomeoneLikeYou,
     author: "Adele",
   },
-
   {
+    id: "b6u0v8",
     title: "Back To Black",
     src: BackToBlack,
     author: "Amy Winehouse",
   },
-
   {
-    title: "My Kind Of Love ",
+    id: "j4l7t6",
+    title: "My Kind Of Love",
     src: MyKindOfLove,
     author: "Emeli Sande",
   },
-
   {
+    id: "z5q8k1",
     title: "Tears In Heaven",
     src: TearsInHeaven,
     author: "Eric Clapton",
   },
-
   {
+    id: "i8o9c2",
     title: "If You Want Me",
     src: IfYouWantMe,
     author: "Once OST",
   },
-
   {
+    id: "p3r6b9",
     title: "Shape Of My Heart",
     src: ShapeOfMyHeart,
     author: "Sting",
   },
-
   {
+    id: "s2e4f1",
     title: "Yesterday",
     src: Yesterday,
     author: "The Beatles",
   },
-
   {
+    id: "x6a7j0",
     title: "I Will Always Love You",
     src: IWillAlwaysLoveYou,
     author: "Whitney Houston",
   },
-
   {
+    id: "w9v3z5",
     title: "You don't own me",
     src: YouDontOwnMe,
     author: "Lesley Gore",
   },
-
   {
+    id: "u3f2e4",
     title: "А зори здесь тихие",
     src: TheDawnsAreQuietHere,
     author: "Любэ",

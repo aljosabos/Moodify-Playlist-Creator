@@ -3,13 +3,13 @@ import Controls from "./Controls/Controls";
 import ProgressBar from "./ProgressBar/ProgressBar";
 import Track from "./Track/Track";
 import { happyTracks } from "../../../assets/happyTracks";
-import { ICurrentTrack } from "../../../types/types";
+import { ITrack } from "../../../types/types";
 import "./Player.scss";
 
 export default function Player() {
   const playlistLength = happyTracks.length;
   const [trackIndex, setTrackIndex] = useState(0);
-  const [currentTrack, setCurrentTrack] = useState<ICurrentTrack>(
+  const [currentTrack, setCurrentTrack] = useState<ITrack>(
     happyTracks[trackIndex]
   );
   const [timeProgress, setTimeProgress] = useState(0);
@@ -21,7 +21,6 @@ export default function Player() {
   useEffect(() => {
     setCurrentTrack(happyTracks[trackIndex]);
   }, [trackIndex]);
-
 
   return (
     <div className="Player">
@@ -37,7 +36,7 @@ export default function Player() {
             setTrackIndex,
             playlistLength,
             setCurrentTrack,
-            setDuration
+            setDuration,
           }}
         />
         <ProgressBar
