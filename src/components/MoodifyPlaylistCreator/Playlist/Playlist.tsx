@@ -5,9 +5,10 @@ import { useContext } from "react";
 
 interface IPlaylistProps {
   tracks: ITrack[];
+  mood: string;
 }
 
-export default function Playlist({ tracks }: IPlaylistProps) {
+export default function Playlist({ tracks, mood }: IPlaylistProps) {
   const { currentTrackIndex, setCurrentTrackIndex } = useContext(
     CurrentTrackIndexContext
   );
@@ -29,6 +30,7 @@ export default function Playlist({ tracks }: IPlaylistProps) {
             title,
             listNumber: index + 1,
             isPlaying: index === currentTrackIndex,
+            mood,
             onClick: (e) => handleClick(e, index),
           }}
         />

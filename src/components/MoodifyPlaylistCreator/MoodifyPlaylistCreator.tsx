@@ -30,7 +30,7 @@ export default function MoodifyPlaylistCreator() {
       >
         <Player {...{ tracks, mood }} />
         <MoodSelector {...{ changeMood }} />
-        <Playlist {...{ tracks }} />
+        <Playlist {...{ tracks, mood }} />
       </CurrentTrackIndexContext.Provider>
     </div>
   );

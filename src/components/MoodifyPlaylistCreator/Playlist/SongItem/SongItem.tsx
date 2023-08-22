@@ -8,6 +8,7 @@ interface ISongItemProps {
   listNumber: number;
   isPlaying: boolean;
   onClick: (e: React.MouseEvent) => void;
+  mood: string;
 }
 
 export default function SongItem({
@@ -16,8 +17,22 @@ export default function SongItem({
   listNumber,
   isPlaying,
   onClick,
+  mood,
 }: ISongItemProps) {
   const songPlaybackStyle = isPlaying ? "playback" : "";
+
+  const btnContent =
+    mood === "custom" ? (
+      <>
+        <BsFillTrashFill />
+        <span>Remove</span>
+      </>
+    ) : (
+      <>
+        <BiPlusMedical />
+        <span>Add to Custom </span>
+      </>
+    );
 
   return (
     <div className={`SongItem ${songPlaybackStyle}`} onClick={onClick}>
@@ -25,14 +40,7 @@ export default function SongItem({
       <span className="SongItem-artist">{author}</span>
       <span className="SongItem-title">{title}</span>
       <div className="SongItem__btns">
-        <button>
-          <BiPlusMedical />
-          <span>Add to Custom </span>
-        </button>
-        <button>
-          <BsFillTrashFill />
-          <span>Remove</span>
-        </button>
+        <button>{btnContent}</button>
       </div>
     </div>
   );
