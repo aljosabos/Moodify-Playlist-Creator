@@ -5,6 +5,7 @@ import {
   useRef,
   useCallback,
   ChangeEvent,
+  useContext,
 } from "react";
 import "./Controls.scss";
 import {
@@ -19,14 +20,14 @@ import {
 import { IoMdVolumeHigh, IoMdVolumeOff, IoMdVolumeLow } from "react-icons/io";
 import { SKIP_TIME } from "../../../../assets/constants";
 import { useAutoPlayNextSong } from "../../../../hooks/useAutoPlayNextSong";
+import { CurrentTrackIndexContext } from "../../../../context/CurrentTrackIndexContext";
 
 interface IControlProps {
   progressBarRef: MutableRefObject<HTMLInputElement | null>;
   audioRef: MutableRefObject<HTMLAudioElement | null>;
   duration: number;
   setTimeProgress: React.Dispatch<React.SetStateAction<number>>;
-  trackIndex: number;
-  setTrackIndex: React.Dispatch<React.SetStateAction<number>>;
+
   playlistLength: number;
 }
 
@@ -35,8 +36,6 @@ export default function Controls({
   audioRef,
   duration,
   setTimeProgress,
-  trackIndex,
-  setTrackIndex,
   playlistLength,
 }: IControlProps) {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -44,6 +43,10 @@ export default function Controls({
   const [muteVolume, setMuteVolume] = useState(false);
 
   const playAnimationRef = useRef<number | null>();
+
+  const { currentTrackIndex, setCurrentTrackIndex } = useContext(
+    CurrentTrackIndexContext
+  );
 
   const repeat = useCallback(() => {
     const currentTime = audioRef.current ? audioRef.current.currentTime : 0;
@@ -67,6 +70,10 @@ export default function Controls({
     /* request-id */
     playAnimationRef.current = requestAnimationFrame(repeat);
   }, [audioRef, duration, progressBarRef, setTimeProgress]);
+
+  const togglePlay = () => {
+    setIsPlaying((currentStatus) => !currentStatus);
+  };
 
   // useEffect(() => {
   //   if (isPlaying && audioRef.current) {
@@ -96,9 +103,9 @@ export default function Controls({
     }
   }, [volume, audioRef, muteVolume]);
 
-  const togglePlay = () => {
-    setIsPlaying((currentStatus) => !currentStatus);
-  };
+  useEffect(() => {
+    if (!isPlaying) setIsPlaying(true);
+  }, [currentTrackIndex]);
 
   const skipForward = () => {
     if (audioRef.current) audioRef.current.currentTime += SKIP_TIME;
@@ -108,19 +115,19 @@ export default function Controls({
   };
 
   const handlePrevious = () => {
-    if (trackIndex === 0) {
+    if (currentTrackIndex === 0) {
       let lastTrackIndex = playlistLength - 1;
-      setTrackIndex(lastTrackIndex);
+      setCurrentTrackIndex(lastTrackIndex);
     } else {
-      setTrackIndex((prev) => prev - 1);
+      setCurrentTrackIndex((prev) => prev - 1);
     }
   };
 
   const handleNext = () => {
-    if (trackIndex >= playlistLength - 1) {
-      setTrackIndex(0);
+    if (currentTrackIndex >= playlistLength - 1) {
+      setCurrentTrackIndex(0);
     } else {
-      setTrackIndex((prev) => prev + 1);
+      setCurrentTrackIndex((prev) => prev + 1);
     }
   };
 

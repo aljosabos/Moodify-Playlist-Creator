@@ -6,15 +6,21 @@ interface ISongItemProps {
   author: string;
   title: string;
   listNumber: number;
+  isPlaying: boolean;
+  onClick: (e: React.MouseEvent) => void;
 }
 
 export default function SongItem({
   author,
   title,
   listNumber,
+  isPlaying,
+  onClick,
 }: ISongItemProps) {
+  const songPlaybackStyle = isPlaying ? "playback" : "";
+
   return (
-    <div className="SongItem">
+    <div className={`SongItem ${songPlaybackStyle}`} onClick={onClick}>
       <span>{listNumber}.</span>
       <span className="SongItem-artist">{author}</span>
       <span className="SongItem-title">{title}</span>

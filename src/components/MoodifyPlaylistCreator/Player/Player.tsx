@@ -1,19 +1,26 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import Controls from "./Controls/Controls";
 import ProgressBar from "./ProgressBar/ProgressBar";
 import Track from "./Track/Track";
-import { happyTracks } from "../../../assets/happyTracks";
 import { ITrack } from "../../../types/types";
 import "./Player.scss";
+import { CurrentTrackIndexContext } from "../../../context/CurrentTrackIndexContext";
 
 interface IPlayerProps {
   tracks: ITrack[];
+  mood: string;
 }
 
-export default function Player({ tracks }: IPlayerProps) {
+export default function Player({ tracks, mood }: IPlayerProps) {
   const playlistLength = tracks.length;
-  const [trackIndex, setTrackIndex] = useState(0);
-  const [currentTrack, setCurrentTrack] = useState<ITrack>(tracks[trackIndex]);
+
+  const { currentTrackIndex, setCurrentTrackIndex } = useContext(
+    CurrentTrackIndexContext
+  );
+
+  const [currentTrack, setCurrentTrack] = useState<ITrack>(
+    tracks[currentTrackIndex]
+  );
   const [timeProgress, setTimeProgress] = useState(0);
   const [duration, setDuration] = useState(0);
 
@@ -21,12 +28,12 @@ export default function Player({ tracks }: IPlayerProps) {
   const progressBarRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
-    setCurrentTrack(happyTracks[trackIndex]);
-  }, [trackIndex]);
+    if (tracks) setCurrentTrack(tracks[currentTrackIndex]);
+  }, [tracks, currentTrackIndex]);
 
   useEffect(() => {
-    if (tracks) setCurrentTrack(tracks[trackIndex]);
-  }, [tracks]);
+    setCurrentTrackIndex(0);
+  }, [mood]);
 
   return (
     <div className="Player">
@@ -40,8 +47,6 @@ export default function Player({ tracks }: IPlayerProps) {
             audioRef,
             duration,
             setTimeProgress,
-            trackIndex,
-            setTrackIndex,
             playlistLength,
             setDuration,
           }}

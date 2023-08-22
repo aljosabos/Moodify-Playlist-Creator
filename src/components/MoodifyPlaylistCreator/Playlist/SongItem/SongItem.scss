@@ -6,6 +6,7 @@
   align-items: flex-end;
   transition: all 0.2s;
   cursor: pointer;
+  user-select: none;
 
   &:hover {
     background-color: #f3efef;
@@ -37,5 +38,13 @@
         background-color: #fff5f5;
       }
     }
+  }
+}
+
+.playback {
+  background-color: #c1b6bc;
+
+  &:hover {
+    background-color: #c1b6bc;
   }
 }
