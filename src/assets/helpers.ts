@@ -1,5 +1,5 @@
 import moment from "moment";
-import { ITrackInfo } from "../types/types";
+import { IPlaylists, ITrackInfo } from "../types/types";
 
 export const formatSecondsToSongDuration = (totalSeconds: number) => {
   const duration = moment.duration(totalSeconds, "seconds");
@@ -21,4 +21,14 @@ export const getFavoriteTracksInfo = (): ITrackInfo[] => {
 
 export const saveFavoriteTracksInfo = (tracksInfo: ITrackInfo[]) => {
   localStorage.setItem("favorites", JSON.stringify(tracksInfo));
+};
+
+export const mapFavoriteTracksInfoToFavoriteTracks = (
+  playlists: IPlaylists
+) => {
+  const favoriteTracksInfo = getFavoriteTracksInfo();
+
+  return favoriteTracksInfo.map(
+    ({ mood, id }) => playlists[mood].filter((track) => track.id === id)[0]
+  );
 };

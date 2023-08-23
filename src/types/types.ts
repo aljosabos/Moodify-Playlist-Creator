@@ -10,6 +10,10 @@ export interface ITrackInfo {
   id: string;
 }
 
+export interface IPlaylists {
+  [key: string]: ITrack[]
+}
+
 export enum Mood {
   Happy = "happy",
   Sad = "sad",

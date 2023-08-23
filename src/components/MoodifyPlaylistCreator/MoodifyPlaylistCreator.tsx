@@ -3,42 +3,30 @@ import Player from "./Player/Player";
 import "./MoodifyPlaylistCreator.scss";
 import Playlist from "./Playlist/Playlist";
 import { useState, useEffect, useMemo } from "react";
-import { ITrack, Mood } from "../../types/types";
+import { IPlaylists, ITrack, Mood } from "../../types/types";
 import { TrackContext } from "../../context/TrackContext";
-import { getFavoriteTracksInfo } from "../../assets/helpers";
-import { energeticTracks } from "../../assets/energeticTracks";
-import { sadTracks } from "../../assets/sadTracks";
-import { happyTracks } from "../../assets/happyTracks";
-import { relaxedTracks } from "../../assets/relaxedTracks";
+import {
+  getFavoriteTracksInfo,
+  mapFavoriteTracksInfoToFavoriteTracks,
+} from "../../assets/helpers";
+import { playlists } from "../../assets/constants";
 
 export default function MoodifyPlaylistCreator() {
+  const trackPlaylists: IPlaylists = useMemo(() => playlists, []);
+
   const [mood, setMood] = useState<Mood>(Mood.Happy);
   const [playlistTracks, setPlaylistTracks] = useState<ITrack[]>([]);
-  const [playerTracks, setPlayerTracks] = useState<ITrack[]>(happyTracks);
+  const [playerTracks, setPlayerTracks] = useState<ITrack[]>(playlists.happy);
   const [currentTrackIndex, setCurrentTrackIndex] = useState<number>(0);
   const [refreshPlaylist, setRefreshPlaylist] = useState<boolean>(false);
   const [trackChanged, setTrackChanged] = useState<boolean>(false);
 
-  const moodTrackArrays: { [key: string]: ITrack[] } = useMemo(
-    () => ({
-      energetic: energeticTracks,
-      sad: sadTracks,
-      happy: happyTracks,
-      relaxed: relaxedTracks,
-    }),
-    []
-  );
-
   useEffect(() => {
     if (mood !== Mood.Favorites) {
-      setPlaylistTracks(moodTrackArrays[mood]);
+      setPlaylistTracks(trackPlaylists[mood]);
     } else {
-      const favoriteTracksInfo = getFavoriteTracksInfo();
-
-      const favoriteTracks = favoriteTracksInfo.map(
-        ({ mood, id }) =>
-          moodTrackArrays[mood].filter((track) => track.id === id)[0]
-      );
+      const favoriteTracks =
+        mapFavoriteTracksInfoToFavoriteTracks(trackPlaylists);
       setPlaylistTracks(favoriteTracks);
     }
   }, [mood, refreshPlaylist]);
@@ -53,14 +41,10 @@ export default function MoodifyPlaylistCreator() {
 
   useEffect(() => {
     if (mood !== Mood.Favorites) {
-      setPlayerTracks(moodTrackArrays[mood]);
+      setPlayerTracks(trackPlaylists[mood]);
     } else {
-      const favoriteTracksInfo = getFavoriteTracksInfo();
-
-      const favoriteTracks = favoriteTracksInfo.map(
-        ({ mood, id }) =>
-          moodTrackArrays[mood].filter((track) => track.id === id)[0]
-      );
+      const favoriteTracks =
+        mapFavoriteTracksInfoToFavoriteTracks(trackPlaylists);
       setPlayerTracks(favoriteTracks);
     }
   }, [trackChanged]);
