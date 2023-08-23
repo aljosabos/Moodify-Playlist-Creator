@@ -6,6 +6,7 @@ import { sadTracks } from "./sadTracks";
 export const SKIP_TIME = 15;
 export const VOLUME_OFF = 5;
 export const VOLUME_LOW = 40;
+export const FAVORITES = "favorites";
 
 export const playlists = {
   energetic: energeticTracks,

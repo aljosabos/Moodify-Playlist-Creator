@@ -28,7 +28,24 @@
 
   &__btns {
     display: flex;
+    align-items: center;
     margin-left: auto;
+
+    &-favorites {
+      font-size: 13px;
+      font-weight: bold;
+      color: white;
+      background-color: #0dd60d;
+      padding: 4px 10px;
+      border-radius: 4px;
+      display: flex;
+      gap: 3px;
+      align-items: center;
+
+      svg {
+        font-size: 17px;
+      }
+    }
 
     button {
       display: flex;

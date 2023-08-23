@@ -8,6 +8,7 @@ import {
 import { useContext } from "react";
 import { TrackContext } from "../../../../context/TrackContext";
 import { Mood } from "../../../../types/types";
+import { AiOutlineStar } from "react-icons/ai";
 
 interface ISongItemProps {
   id: string;
@@ -50,10 +51,8 @@ export default function SongItem({
     setRefreshPlaylist(true);
   };
 
-  const renderBtn = () => {
-    if (isInFavorites) return;
-
-    return mood === Mood.Favorites ? (
+  const btn =
+    mood === Mood.Favorites ? (
       <button onClick={removeFromFavorites}>
         <BsFillTrashFill />
         <span>Remove</span>
@@ -64,14 +63,22 @@ export default function SongItem({
         <span>Add to Favorites </span>
       </button>
     );
-  };
 
   return (
     <div className={`SongItem ${songPlaybackStyle}`} onClick={onClick}>
       <span className="SongItem-listNumber">{listNumber}.</span>
       <span className="SongItem-artist">{author}</span>
       <span className="SongItem-title">{title}</span>
-      <div className="SongItem__btns">{renderBtn()}</div>
+      <div className="SongItem__btns">
+        {isInFavorites ? (
+          <span className="SongItem__btns-favorites">
+            <AiOutlineStar />
+            In Favorites
+          </span>
+        ) : (
+          btn
+        )}
+      </div>
     </div>
   );
 }
