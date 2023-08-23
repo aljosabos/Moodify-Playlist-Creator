@@ -4,21 +4,16 @@ import ProgressBar from "./ProgressBar/ProgressBar";
 import Track from "./Track/Track";
 import { ITrack } from "../../../types/types";
 import "./Player.scss";
-import { TrackContext } from "../../../context/CurrentTrackIndexContext";
+import { TrackContext } from "../../../context/TrackContext";
 
 interface IPlayerProps {
   tracks: ITrack[];
-  mood: string;
 }
 
-export default function Player({ tracks, mood }: IPlayerProps) {
-  const playlistLength = tracks.length;
+export default function Player({ tracks, }: IPlayerProps) {
+  const { currentTrackIndex } = useContext(TrackContext);
 
-  const { currentTrackIndex, setCurrentTrackIndex } = useContext(TrackContext);
-
-  const [currentTrack, setCurrentTrack] = useState<ITrack>(
-    tracks[currentTrackIndex]
-  );
+  const [currentTrack, setCurrentTrack] = useState<ITrack>();
   const [timeProgress, setTimeProgress] = useState(0);
   const [duration, setDuration] = useState(0);
 
@@ -28,10 +23,6 @@ export default function Player({ tracks, mood }: IPlayerProps) {
   useEffect(() => {
     if (tracks) setCurrentTrack(tracks[currentTrackIndex]);
   }, [tracks, currentTrackIndex]);
-
-  useEffect(() => {
-    setCurrentTrackIndex(0);
-  }, [mood]);
 
   return (
     <div className="Player">
@@ -44,7 +35,7 @@ export default function Player({ tracks, mood }: IPlayerProps) {
             audioRef,
             duration,
             setTimeProgress,
-            playlistLength,
+            playlistLength: tracks?.length,
             setDuration,
           }}
         />

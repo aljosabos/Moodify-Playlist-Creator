@@ -1,5 +1,5 @@
 import { getFavoriteTracksInfo } from "../../../assets/helpers";
-import { TrackContext } from "../../../context/CurrentTrackIndexContext";
+import { TrackContext } from "../../../context/TrackContext";
 import { ITrack } from "../../../types/types";
 import SongItem from "./SongItem/SongItem";
 import { useContext } from "react";
@@ -11,7 +11,8 @@ interface IPlaylistProps {
 }
 
 export default function Playlist({ tracks, mood }: IPlaylistProps) {
-  const { currentTrackIndex, setCurrentTrackIndex } = useContext(TrackContext);
+  const { currentTrackIndex, setCurrentTrackIndex, setTrackChanged } =
+    useContext(TrackContext);
 
   const favoriteTrackIDS = getFavoriteTracksInfo()
     .filter((info) => info.mood === mood)
@@ -21,6 +22,7 @@ export default function Playlist({ tracks, mood }: IPlaylistProps) {
     const doubleClick = e.detail === 2;
     if (doubleClick) {
       setCurrentTrackIndex(index);
+      setTrackChanged(true);
     }
   };
 

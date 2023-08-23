@@ -20,7 +20,7 @@ import {
 import { IoMdVolumeHigh, IoMdVolumeOff, IoMdVolumeLow } from "react-icons/io";
 import { SKIP_TIME } from "../../../../assets/constants";
 import { useAutoPlayNextSong } from "../../../../hooks/useAutoPlayNextSong";
-import { TrackContext } from "../../../../context/CurrentTrackIndexContext";
+import { TrackContext } from "../../../../context/TrackContext";
 
 interface IControlProps {
   progressBarRef: MutableRefObject<HTMLInputElement | null>;
@@ -43,9 +43,7 @@ export default function Controls({
 
   const playAnimationRef = useRef<number | null>();
 
-  const { currentTrackIndex, setCurrentTrackIndex } = useContext(
-    TrackContext
-  );
+  const { currentTrackIndex, setCurrentTrackIndex } = useContext(TrackContext);
 
   const repeat = useCallback(() => {
     const currentTime = audioRef.current

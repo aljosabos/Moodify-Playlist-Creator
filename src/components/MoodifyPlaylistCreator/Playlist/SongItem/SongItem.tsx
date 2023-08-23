@@ -6,7 +6,7 @@ import {
   saveFavoriteTracksInfo,
 } from "../../../../assets/helpers";
 import { useContext } from "react";
-import { TrackContext } from "../../../../context/CurrentTrackIndexContext";
+import { TrackContext } from "../../../../context/TrackContext";
 import { Mood } from "../../../../types/types";
 
 interface ISongItemProps {
