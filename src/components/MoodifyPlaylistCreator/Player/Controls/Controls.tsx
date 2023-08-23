@@ -65,8 +65,6 @@ export default function Controls({
         }%`
       );
     }
-
-    /* request-id */
     playAnimationRef.current = requestAnimationFrame(repeat);
   }, [audioRef, duration, progressBarRef, setTimeProgress]);
 

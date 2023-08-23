@@ -17,7 +17,7 @@ interface ISongItemProps {
   isPlaying: boolean;
   onClick: (e: React.MouseEvent) => void;
   mood: string;
-  isFavorite: boolean;
+  isInFavorites: boolean;
 }
 
 export default function SongItem({
@@ -28,7 +28,7 @@ export default function SongItem({
   isPlaying,
   onClick,
   mood,
-  isFavorite,
+  isInFavorites,
 }: ISongItemProps) {
   const songPlaybackStyle = isPlaying ? "playback" : "";
 
@@ -51,7 +51,7 @@ export default function SongItem({
   };
 
   const renderBtn = () => {
-    if (isFavorite) return;
+    if (isInFavorites) return;
 
     return mood === Mood.Favorites ? (
       <button onClick={removeFromFavorites}>

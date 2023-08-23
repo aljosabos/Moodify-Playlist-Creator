@@ -16,7 +16,6 @@ export default function Track({
   setDuration,
   progressBarRef,
 }: ITrackProps) {
-  /////
   const onLoadedMetadata = () => {
     if (audioRef.current) {
       const seconds = Math.floor(audioRef.current.duration);
