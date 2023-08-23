@@ -1,8 +1,10 @@
 .Player {
   background: #c1b6bc;
+  display: flex;
 
   &__content {
     margin: 0 auto;
     padding: 20px;
+    width: 950px;
   }
 }

@@ -1,10 +1,10 @@
 import { createContext } from "react";
 
-export interface ICurrentTrackIndexContext {
+export interface ITrackContext {
   currentTrackIndex: number;
   setCurrentTrackIndex: React.Dispatch<React.SetStateAction<number>>;
+  refreshPlaylist: boolean;
+  setRefreshPlaylist: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const CurrentTrackIndexContext = createContext(
-  {} as ICurrentTrackIndexContext
-);
+export const TrackContext = createContext({} as ITrackContext);

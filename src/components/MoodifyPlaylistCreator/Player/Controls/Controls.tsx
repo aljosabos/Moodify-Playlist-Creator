@@ -20,14 +20,13 @@ import {
 import { IoMdVolumeHigh, IoMdVolumeOff, IoMdVolumeLow } from "react-icons/io";
 import { SKIP_TIME } from "../../../../assets/constants";
 import { useAutoPlayNextSong } from "../../../../hooks/useAutoPlayNextSong";
-import { CurrentTrackIndexContext } from "../../../../context/CurrentTrackIndexContext";
+import { TrackContext } from "../../../../context/CurrentTrackIndexContext";
 
 interface IControlProps {
   progressBarRef: MutableRefObject<HTMLInputElement | null>;
   audioRef: MutableRefObject<HTMLAudioElement | null>;
   duration: number;
   setTimeProgress: React.Dispatch<React.SetStateAction<number>>;
-
   playlistLength: number;
 }
 
@@ -45,11 +44,13 @@ export default function Controls({
   const playAnimationRef = useRef<number | null>();
 
   const { currentTrackIndex, setCurrentTrackIndex } = useContext(
-    CurrentTrackIndexContext
+    TrackContext
   );
 
   const repeat = useCallback(() => {
-    const currentTime = audioRef.current ? audioRef.current.currentTime : 0;
+    const currentTime = audioRef.current
+      ? Math.floor(audioRef.current.currentTime)
+      : 0;
 
     setTimeProgress(currentTime);
 
@@ -75,18 +76,6 @@ export default function Controls({
     setIsPlaying((currentStatus) => !currentStatus);
   };
 
-  // useEffect(() => {
-  //   if (isPlaying && audioRef.current) {
-  //     audioRef.current.play();
-  //     playAnimationRef.current = requestAnimationFrame(repeat);
-  //   } else if (audioRef.current) {
-  //     audioRef.current.pause();
-
-  //     if (playAnimationRef.current)
-  //       cancelAnimationFrame(playAnimationRef.current);
-  //   }
-  // }, [isPlaying, audioRef, repeat]);
-
   useEffect(() => {
     if (isPlaying && audioRef.current) {
       audioRef.current.play();
@@ -103,8 +92,9 @@ export default function Controls({
     }
   }, [volume, audioRef, muteVolume]);
 
+  /* play on double click */
   useEffect(() => {
-    if (!isPlaying) setIsPlaying(true);
+    setIsPlaying(true);
   }, [currentTrackIndex]);
 
   const skipForward = () => {

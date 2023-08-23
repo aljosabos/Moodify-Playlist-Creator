@@ -4,7 +4,7 @@ import ProgressBar from "./ProgressBar/ProgressBar";
 import Track from "./Track/Track";
 import { ITrack } from "../../../types/types";
 import "./Player.scss";
-import { CurrentTrackIndexContext } from "../../../context/CurrentTrackIndexContext";
+import { TrackContext } from "../../../context/CurrentTrackIndexContext";
 
 interface IPlayerProps {
   tracks: ITrack[];
@@ -14,9 +14,7 @@ interface IPlayerProps {
 export default function Player({ tracks, mood }: IPlayerProps) {
   const playlistLength = tracks.length;
 
-  const { currentTrackIndex, setCurrentTrackIndex } = useContext(
-    CurrentTrackIndexContext
-  );
+  const { currentTrackIndex, setCurrentTrackIndex } = useContext(TrackContext);
 
   const [currentTrack, setCurrentTrack] = useState<ITrack>(
     tracks[currentTrackIndex]
@@ -38,9 +36,8 @@ export default function Player({ tracks, mood }: IPlayerProps) {
   return (
     <div className="Player">
       <div className="Player__content">
-        {currentTrack && (
-          <Track {...{ currentTrack, audioRef, setDuration, progressBarRef }} />
-        )}
+        <Track {...{ currentTrack, audioRef, setDuration, progressBarRef }} />
+
         <Controls
           {...{
             progressBarRef,

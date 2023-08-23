@@ -7,9 +7,17 @@
   transition: all 0.2s;
   cursor: pointer;
   user-select: none;
+  height: 30px;
 
   &:hover {
     background-color: #f3efef;
+  }
+
+  &-listNumber {
+    width: 20px;
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 10px;
   }
 
   &-artist {
@@ -30,7 +38,6 @@
       background-color: transparent;
       gap: 4px;
       transition: all 0.2s;
-      padding: 7px;
       border-radius: 5px;
       cursor: pointer;
 

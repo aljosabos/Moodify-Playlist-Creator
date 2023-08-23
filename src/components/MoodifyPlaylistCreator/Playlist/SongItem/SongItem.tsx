@@ -1,47 +1,77 @@
 import { BiPlusMedical } from "react-icons/bi";
 import { BsFillTrashFill } from "react-icons/bs";
 import "./SongItem.scss";
+import {
+  getFavoriteTracksInfo,
+  saveFavoriteTracksInfo,
+} from "../../../../assets/helpers";
+import { useContext } from "react";
+import { TrackContext } from "../../../../context/CurrentTrackIndexContext";
+import { Mood } from "../../../../types/types";
 
 interface ISongItemProps {
+  id: string;
   author: string;
   title: string;
   listNumber: number;
   isPlaying: boolean;
   onClick: (e: React.MouseEvent) => void;
   mood: string;
+  isFavorite: boolean;
 }
 
 export default function SongItem({
+  id,
   author,
   title,
   listNumber,
   isPlaying,
   onClick,
   mood,
+  isFavorite,
 }: ISongItemProps) {
   const songPlaybackStyle = isPlaying ? "playback" : "";
 
-  const btnContent =
-    mood === "custom" ? (
-      <>
+  const { setRefreshPlaylist } = useContext(TrackContext);
+
+  const addToFavorites = () => {
+    const favoriteTracksInfo = getFavoriteTracksInfo();
+    const updatedFavoriteTracksInfo = [...favoriteTracksInfo, { mood, id }];
+    saveFavoriteTracksInfo(updatedFavoriteTracksInfo);
+    setRefreshPlaylist(true);
+  };
+
+  const removeFromFavorites = () => {
+    const favoriteTracksInfo = getFavoriteTracksInfo();
+    const filteredFavoriteTracksInfo = favoriteTracksInfo.filter(
+      (info) => info.id !== id
+    );
+    saveFavoriteTracksInfo(filteredFavoriteTracksInfo);
+    setRefreshPlaylist(true);
+  };
+
+  const renderBtn = () => {
+    if (isFavorite) return;
+
+    return mood === Mood.Favorites ? (
+      <button onClick={removeFromFavorites}>
         <BsFillTrashFill />
         <span>Remove</span>
-      </>
+      </button>
     ) : (
-      <>
+      <button onClick={addToFavorites}>
         <BiPlusMedical />
-        <span>Add to Custom </span>
-      </>
+        <span>Add to Favorites </span>
+      </button>
     );
+  };
 
   return (
     <div className={`SongItem ${songPlaybackStyle}`} onClick={onClick}>
-      <span>{listNumber}.</span>
+      <span className="SongItem-listNumber">{listNumber}.</span>
       <span className="SongItem-artist">{author}</span>
       <span className="SongItem-title">{title}</span>
-      <div className="SongItem__btns">
-        <button>{btnContent}</button>
-      </div>
+      <div className="SongItem__btns">{renderBtn()}</div>
     </div>
   );
 }

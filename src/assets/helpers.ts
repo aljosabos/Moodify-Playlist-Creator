@@ -1,4 +1,5 @@
 import moment from "moment";
+import { ITrackInfo } from "../types/types";
 
 export const formatSecondsToSongDuration = (totalSeconds: number) => {
   const duration = moment.duration(totalSeconds, "seconds");
@@ -7,4 +8,17 @@ export const formatSecondsToSongDuration = (totalSeconds: number) => {
   const seconds =
     duration.seconds() < 10 ? "0" + duration.seconds() : duration.seconds();
   return `${minutes}:${seconds}`;
+};
+
+export const getFavoriteTracksInfo = (): ITrackInfo[] => {
+  const JSONTracks = localStorage.getItem("favorites");
+  if (JSONTracks !== null) {
+    return JSON.parse(JSONTracks);
+  } else {
+    return [];
+  }
+};
+
+export const saveFavoriteTracksInfo = (tracksInfo: ITrackInfo[]) => {
+  localStorage.setItem("favorites", JSON.stringify(tracksInfo));
 };

@@ -9,7 +9,10 @@ export const useAutoPlayNextSong = (
     const audioElement = audioRef.current;
 
     if (audioElement) {
-      audioElement.addEventListener("ended", handleNext);
+      audioElement.addEventListener("ended", () => {
+        handleNext();
+      });
+
       if (callback) callback();
     }
 

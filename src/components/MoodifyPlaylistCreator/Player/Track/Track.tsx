@@ -1,10 +1,10 @@
-import { ICurrentTrack } from "../../../../types/types";
+import { ITrack } from "../../../../types/types";
 import { MutableRefObject } from "react";
 import { BsMusicNoteBeamed } from "react-icons/bs";
 import "./Track.scss";
 
 interface ITrackProps {
-  currentTrack: ICurrentTrack;
+  currentTrack?: ITrack;
   audioRef: MutableRefObject<HTMLAudioElement | null>;
   setDuration: React.Dispatch<React.SetStateAction<number>>;
   progressBarRef: MutableRefObject<HTMLInputElement | null>;
@@ -19,7 +19,7 @@ export default function Track({
   /////
   const onLoadedMetadata = () => {
     if (audioRef.current) {
-      const seconds = audioRef.current.duration;
+      const seconds = Math.floor(audioRef.current.duration);
       setDuration(seconds);
       (progressBarRef.current as HTMLInputElement).max = seconds.toString();
     }
@@ -28,7 +28,7 @@ export default function Track({
   return (
     <div className="Track">
       <audio
-        src={currentTrack.src}
+        src={currentTrack && currentTrack.src}
         ref={audioRef}
         onLoadedMetadata={onLoadedMetadata}
       />
@@ -45,8 +45,12 @@ export default function Track({
           {/* )} */}
         </div>
         <div className="Track__info__text">
-          <p className="Track__info__text-title">{currentTrack.title}</p>
-          <p>{currentTrack.author}</p>
+          <p className="Track__info__text-title">
+            {currentTrack?.title || "No favorite songs"}
+          </p>
+          <p className="Track__info__text-author">
+            {currentTrack?.author || "List is empty"}
+          </p>
         </div>
       </div>
     </div>
