@@ -100,6 +100,8 @@ export default function Track({
                 height={300}
                 searchDisabled
                 onEmojiClick={handleEmojiSelect}
+                lazyLoadEmojis
+                skinTonesDisabled
               />
             )}
           </span>
