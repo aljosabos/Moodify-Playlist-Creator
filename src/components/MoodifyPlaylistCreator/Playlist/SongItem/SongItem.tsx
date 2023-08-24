@@ -33,13 +33,13 @@ export default function SongItem({
 }: ISongItemProps) {
   const songPlaybackStyle = isPlaying ? "playback" : "";
 
-  const { setRefreshPlaylist } = useContext(TrackContext);
+  const { setShouldRefreshPlaylists } = useContext(TrackContext);
 
   const addToFavorites = () => {
     const favoriteTracksInfo = getFavoriteTracksInfo();
     const updatedFavoriteTracksInfo = [...favoriteTracksInfo, { mood, id }];
     saveFavoriteTracksInfo(updatedFavoriteTracksInfo);
-    setRefreshPlaylist(true);
+    setShouldRefreshPlaylists(true);
   };
 
   const removeFromFavorites = () => {
@@ -48,7 +48,7 @@ export default function SongItem({
       (info) => info.id !== id
     );
     saveFavoriteTracksInfo(filteredFavoriteTracksInfo);
-    setRefreshPlaylist(true);
+    setShouldRefreshPlaylists(true);
   };
 
   const btnJSX =

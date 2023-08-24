@@ -16,16 +16,17 @@ export default function MoodifyPlaylistCreator() {
   const [playerTracks, setPlayerTracks] = useState<ITrack[]>(playlists.happy);
   const [mood, setMood] = useState<Mood>(Mood.Happy);
   const [currentTrackIndex, setCurrentTrackIndex] = useState<number>(0);
-  const [refreshPlaylist, setRefreshPlaylist] = useState<boolean>(false);
+  const [shouldRefreshPlaylists, setShouldRefreshPlaylists] =
+    useState<boolean>(false);
   const [shouldRefreshMoods, setShouldRefreshMoods] = useState<boolean>(false);
   const [trackChanged, setTrackChanged] = useState<boolean>(false);
 
   useSetTracks(setPlayerTracks, [trackChanged], mood);
-  useSetTracks(setPlaylistTracks, [mood, refreshPlaylist], mood);
+  useSetTracks(setPlaylistTracks, [mood, shouldRefreshPlaylists], mood);
 
   useEffect(() => {
-    if (refreshPlaylist) setRefreshPlaylist(false);
-  }, [refreshPlaylist]);
+    if (shouldRefreshPlaylists) setShouldRefreshPlaylists(false);
+  }, [shouldRefreshPlaylists]);
 
   useEffect(() => {
     if (trackChanged) setTrackChanged(false);
@@ -41,8 +42,8 @@ export default function MoodifyPlaylistCreator() {
         value={{
           currentTrackIndex,
           setCurrentTrackIndex,
-          refreshPlaylist,
-          setRefreshPlaylist,
+          shouldRefreshPlaylists,
+          setShouldRefreshPlaylists,
           trackChanged,
           setTrackChanged,
         }}
