@@ -21,6 +21,7 @@ import { IoMdVolumeHigh, IoMdVolumeOff, IoMdVolumeLow } from "react-icons/io";
 import { SKIP_TIME } from "../../../../assets/constants";
 import { useAutoPlayNextSong } from "../../../../hooks/useAutoPlayNextSong";
 import { TrackContext } from "../../../../context/TrackContext";
+import { useIsStateChanged } from "../../../../hooks/useIsStateChanged";
 
 interface IControlProps {
   progressBarRef: MutableRefObject<HTMLInputElement | null>;
@@ -44,6 +45,9 @@ export default function Controls({
   const playAnimationRef = useRef<number | null>();
 
   const { currentTrackIndex, setCurrentTrackIndex } = useContext(TrackContext);
+
+  const { isStateChanged: isTrackChanged } =
+    useIsStateChanged(currentTrackIndex);
 
   const repeat = useCallback(() => {
     const currentTime = audioRef.current
@@ -71,6 +75,10 @@ export default function Controls({
   const togglePlay = () => {
     setIsPlaying((currentStatus) => !currentStatus);
   };
+
+  useEffect(() => {
+    if (isTrackChanged) setIsPlaying(true);
+  }, [isTrackChanged]);
 
   useEffect(() => {
     if (isPlaying && audioRef.current) {

@@ -35,9 +35,6 @@ export default function MoodifyPlaylistCreator() {
     setMood(mood);
   };
 
-  console.log(playerTracks);
-  console.log(playerTracks);
-
   return (
     <div className="Root">
       <TrackContext.Provider
