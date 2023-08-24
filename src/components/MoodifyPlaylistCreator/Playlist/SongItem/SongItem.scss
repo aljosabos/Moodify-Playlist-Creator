@@ -34,17 +34,12 @@
     &-favorites {
       font-size: 13px;
       font-weight: bold;
-      color: white;
-      background-color: #0dd60d;
+      color: #0dd60d;
       padding: 4px 10px;
       border-radius: 4px;
+      gap: 5px;
+      align-items: flex-end;
       display: flex;
-      gap: 3px;
-      align-items: center;
-
-      svg {
-        font-size: 17px;
-      }
     }
 
     button {

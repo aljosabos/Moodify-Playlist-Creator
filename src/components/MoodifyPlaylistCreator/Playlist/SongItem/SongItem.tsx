@@ -51,7 +51,7 @@ export default function SongItem({
     setRefreshPlaylist(true);
   };
 
-  const btn =
+  const btnJSX =
     mood === Mood.Favorites ? (
       <button onClick={removeFromFavorites}>
         <BsFillTrashFill />
@@ -76,7 +76,7 @@ export default function SongItem({
             In Favorites
           </span>
         ) : (
-          btn
+          btnJSX
         )}
       </div>
     </div>
