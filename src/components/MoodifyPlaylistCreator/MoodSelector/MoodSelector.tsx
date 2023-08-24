@@ -1,23 +1,31 @@
 import "./MoodSelector.scss";
 import MoodButton from "./MoodButton/MoodButton";
-import { moodButtonsConfig } from "../../../assets/constants";
-import { Mood } from "../../../types/types";
+import { Mood, MoodEnumKey } from "../../../types/types";
+import { getEmoji } from "../../../assets/helpers";
+import { useContext, useEffect } from "react";
+import { MoodContext } from "../../../context/MoodContext";
 
 interface IMoodSelectorProps {
   changeMood: (mood: Mood) => void;
 }
 
 export default function MoodSelector({ changeMood }: IMoodSelectorProps) {
+  const { shouldRefreshMoods, setShouldRefreshMoods } = useContext(MoodContext);
+
+  useEffect(() => {
+    if (shouldRefreshMoods) setShouldRefreshMoods(false);
+  }, [shouldRefreshMoods]);
+
   return (
     <div className="MoodSelector">
       <h2 className="MoodSelector-heading">Choose your mood</h2>
       <div className="MoodSelector__btns">
-        {moodButtonsConfig.map((button) => (
+        {Object.keys(Mood).map((mood) => (
           <MoodButton
-            key={button.mood}
-            Icon={button.Icon}
-            name={button.mood}
-            onClick={() => changeMood(button.mood)}
+            key={mood}
+            mood={Mood[mood as MoodEnumKey]}
+            handleChangeMood={() => changeMood(Mood[mood as MoodEnumKey])}
+            emoji={getEmoji(Mood[mood as MoodEnumKey])}
           />
         ))}
       </div>

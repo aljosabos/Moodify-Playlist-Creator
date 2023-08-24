@@ -1,0 +1,14 @@
+.MoodButton {
+  display: flex;
+
+  &-emojiBtn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    transition: all 0.2s;
+
+    &-emoji {
+      font-size: 24px;
+    }
+  }
+}

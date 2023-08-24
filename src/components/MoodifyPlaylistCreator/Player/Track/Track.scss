@@ -3,7 +3,7 @@
     display: flex;
     gap: 20px;
 
-    &__text {
+    &-text {
       color: #6c402b;
       font-size: 24px;
       font-weight: bold;
@@ -22,9 +22,15 @@
       &-author {
         height: 50px;
       }
+
+      &-playlist {
+        font-size: 18px;
+        margin-right: 10px;
+        color: black;
+      }
     }
 
-    &__img {
+    &-img {
       width: 250px;
       height: 250px;
       background: #1e1e1e;
@@ -49,6 +55,25 @@
         border-radius: 50%;
         background: #989898;
       }
+    }
+  }
+
+  aside.EmojiPickerReact.epr-main {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    z-index: 1000;
+  }
+
+  &_emoji {
+    position: relative;
+    transition: all 0.2s;
+    padding: 3px;
+    border-radius: 5px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: yellow;
     }
   }
 }

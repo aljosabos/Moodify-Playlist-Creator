@@ -2,15 +2,16 @@ import { useState, useRef, useEffect, useContext } from "react";
 import Controls from "./Controls/Controls";
 import ProgressBar from "./ProgressBar/ProgressBar";
 import Track from "./Track/Track";
-import { ITrack } from "../../../types/types";
+import { ITrack, Mood } from "../../../types/types";
 import "./Player.scss";
 import { TrackContext } from "../../../context/TrackContext";
 
 interface IPlayerProps {
   tracks: ITrack[];
+  mood: Mood;
 }
 
-export default function Player({ tracks, }: IPlayerProps) {
+export default function Player({ tracks, mood }: IPlayerProps) {
   const { currentTrackIndex } = useContext(TrackContext);
 
   const [currentTrack, setCurrentTrack] = useState<ITrack>();
@@ -27,7 +28,9 @@ export default function Player({ tracks, }: IPlayerProps) {
   return (
     <div className="Player">
       <div className="Player__content">
-        <Track {...{ currentTrack, audioRef, setDuration, progressBarRef }} />
+        <Track
+          {...{ currentTrack, audioRef, setDuration, progressBarRef, mood }}
+        />
 
         <Controls
           {...{
