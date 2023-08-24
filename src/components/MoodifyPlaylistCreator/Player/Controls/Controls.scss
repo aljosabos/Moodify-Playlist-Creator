@@ -15,10 +15,14 @@
     background-color: transparent;
     margin-right: 8px;
     cursor: pointer;
-  }
 
-  svg {
-    font-size: 24px;
+    svg {
+      font-size: 30px;
+
+      &:hover {
+        color: #583d3d;
+      }
+    }
   }
 
   &__volume {

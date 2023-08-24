@@ -9,7 +9,7 @@ import {
 import { FAVORITES } from "./constants";
 
 export const formatSecondsToSongTime = (totalSeconds: number) => {
-  const duration = moment.duration(totalSeconds, "seconds");
+  const duration = moment.duration(Math.floor(totalSeconds), "seconds");
 
   const minutes = duration.minutes();
   const seconds =

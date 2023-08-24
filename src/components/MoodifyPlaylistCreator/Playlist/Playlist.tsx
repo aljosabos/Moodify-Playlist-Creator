@@ -1,6 +1,5 @@
 import {
   checkIsTrackInFavorites,
-  getFavoriteTracksInfo,
 } from "../../../assets/helpers";
 import { TrackContext } from "../../../context/TrackContext";
 import { ITrack, Mood } from "../../../types/types";

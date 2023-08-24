@@ -1,5 +1,30 @@
+@mixin btn-styles {
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  transition: all 0.2s;
+}
+
 .MoodButton {
   display: flex;
+
+  &-btn {
+    @include btn-styles;
+
+    &:hover {
+      background-color: #bcb4b4;
+    }
+
+    svg {
+      font-size: 24px;
+    }
+  }
 
   &-emojiBtn {
     position: relative;
@@ -11,4 +36,9 @@
       font-size: 24px;
     }
   }
+}
+
+.MoodButton-btn-selected {
+  @include btn-styles;
+  background-color: #d3f393;
 }

@@ -34,11 +34,7 @@ export default function Track({
 
   const { setShouldRefreshMoods } = useContext(MoodContext);
 
-  const onEmojiClose = () => {
-    setShouldShowEmojiPicker(false);
-  };
-
-  useOutsideClick(emojiPickerRef, onEmojiClose);
+  useOutsideClick(emojiPickerRef, () => setShouldShowEmojiPicker(false));
 
   const openEmojiPicker = () => {
     setShouldShowEmojiPicker(true);
@@ -97,11 +93,11 @@ export default function Track({
 
             {shouldShowEmojiPicker && (
               <EmojiPicker
-                height={300}
                 searchDisabled
                 onEmojiClick={handleEmojiSelect}
                 lazyLoadEmojis
                 skinTonesDisabled
+                emojiVersion={"5.0"}
               />
             )}
           </span>

@@ -79,7 +79,7 @@ export default function Controls({
       audioRef.current.pause();
     }
     playAnimationRef.current = requestAnimationFrame(repeat);
-  }, [isPlaying, audioRef, repeat]);
+  }, [isPlaying, audioRef, repeat, currentTrackIndex]);
 
   useEffect(() => {
     if (audioRef.current) {
@@ -87,11 +87,6 @@ export default function Controls({
       audioRef.current.muted = muteVolume;
     }
   }, [volume, audioRef, muteVolume]);
-
-  /* play on double click */
-  useEffect(() => {
-    setIsPlaying(true);
-  }, [currentTrackIndex]);
 
   const skipForward = () => {
     if (audioRef.current) audioRef.current.currentTime += SKIP_TIME;
@@ -113,7 +108,7 @@ export default function Controls({
     if (currentTrackIndex >= playlistLength - 1) {
       setCurrentTrackIndex(0);
     } else {
-      setCurrentTrackIndex((prev) => prev + 1);
+      setCurrentTrackIndex((currentIndex) => currentIndex + 1);
     }
   };
 

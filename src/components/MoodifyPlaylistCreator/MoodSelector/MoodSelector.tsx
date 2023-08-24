@@ -7,9 +7,13 @@ import { MoodContext } from "../../../context/MoodContext";
 
 interface IMoodSelectorProps {
   changeMood: (mood: Mood) => void;
+  currentMood: Mood;
 }
 
-export default function MoodSelector({ changeMood }: IMoodSelectorProps) {
+export default function MoodSelector({
+  changeMood,
+  currentMood,
+}: IMoodSelectorProps) {
   const { shouldRefreshMoods, setShouldRefreshMoods } = useContext(MoodContext);
 
   useEffect(() => {
@@ -24,8 +28,9 @@ export default function MoodSelector({ changeMood }: IMoodSelectorProps) {
           <MoodButton
             key={mood}
             mood={Mood[mood as MoodEnumKey]}
-            handleChangeMood={() => changeMood(Mood[mood as MoodEnumKey])}
+            changeMood={changeMood}
             emoji={getEmoji(Mood[mood as MoodEnumKey])}
+            isSelected={currentMood === Mood[mood as MoodEnumKey]}
           />
         ))}
       </div>

@@ -10,7 +10,9 @@ import { useSetTracks } from "../../hooks/useSetTracks";
 import { MoodContext } from "../../context/MoodContext";
 
 export default function MoodifyPlaylistCreator() {
-  const [playlistTracks, setPlaylistTracks] = useState<ITrack[]>([]);
+  const [playlistTracks, setPlaylistTracks] = useState<ITrack[]>(
+    playlists.happy
+  );
   const [playerTracks, setPlayerTracks] = useState<ITrack[]>(playlists.happy);
   const [mood, setMood] = useState<Mood>(Mood.Happy);
   const [currentTrackIndex, setCurrentTrackIndex] = useState<number>(0);
@@ -33,6 +35,9 @@ export default function MoodifyPlaylistCreator() {
     setMood(mood);
   };
 
+  console.log(playerTracks);
+  console.log(playerTracks);
+
   return (
     <div className="Root">
       <TrackContext.Provider
@@ -49,7 +54,7 @@ export default function MoodifyPlaylistCreator() {
           value={{ shouldRefreshMoods, setShouldRefreshMoods }}
         >
           <Player tracks={playerTracks} mood={mood} />
-          <MoodSelector changeMood={changeMood} />
+          <MoodSelector changeMood={changeMood} currentMood={mood} />
           <Playlist tracks={playlistTracks} mood={mood} />
         </MoodContext.Provider>
       </TrackContext.Provider>
