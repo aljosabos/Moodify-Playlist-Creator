@@ -8,7 +8,10 @@ import {
 import { useContext } from "react";
 import { TrackContext } from "../../../../context/TrackContext";
 import { Mood } from "../../../../types/types";
+import { BsFillStarFill } from "react-icons/bs";
 import { AiOutlineStar } from "react-icons/ai";
+import { useIsResized } from "../../../../hooks/useIsResized";
+import { SMALL_WIDTH } from "../../../../assets/constants";
 
 interface ISongItemProps {
   id: string;
@@ -34,6 +37,7 @@ export default function SongItem({
   const songPlaybackStyle = isPlaying ? "playback" : "";
 
   const { setShouldRefreshPlaylists } = useContext(TrackContext);
+  const { isResized } = useIsResized(SMALL_WIDTH);
 
   const addToFavorites = () => {
     const favoriteTracksInfo = getFavoriteTracksInfo();
@@ -60,8 +64,12 @@ export default function SongItem({
       </button>
     ) : (
       <button onClick={addToFavorites}>
-        <BiPlusMedical />
-        <span>Add to Favorites </span>
+        {isResized ? (
+          <BsFillStarFill className="SongItem__btns-star" />
+        ) : (
+          <BiPlusMedical />
+        )}
+        {!isResized && <span>Add to Favorites</span>}
       </button>
     );
 

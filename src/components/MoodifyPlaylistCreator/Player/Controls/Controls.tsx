@@ -49,7 +49,7 @@ export default function Controls({
   const { isStateChanged: isTrackChanged } =
     useIsStateChanged(currentTrackIndex);
 
-  const repeat = useCallback(() => {
+  const step = useCallback(() => {
     const currentTime = audioRef.current
       ? Math.floor(audioRef.current.currentTime)
       : 0;
@@ -69,7 +69,7 @@ export default function Controls({
         }%`
       );
     }
-    playAnimationRef.current = requestAnimationFrame(repeat);
+    playAnimationRef.current = requestAnimationFrame(step);
   }, [audioRef, duration, progressBarRef, setTimeProgress]);
 
   const togglePlay = () => {
@@ -86,8 +86,8 @@ export default function Controls({
     } else if (audioRef.current) {
       audioRef.current.pause();
     }
-    playAnimationRef.current = requestAnimationFrame(repeat);
-  }, [isPlaying, audioRef, repeat, currentTrackIndex]);
+    playAnimationRef.current = requestAnimationFrame(step);
+  }, [isPlaying, step, audioRef, currentTrackIndex]);
 
   useEffect(() => {
     if (audioRef.current) {
@@ -164,16 +164,20 @@ export default function Controls({
         <button onClick={toggleMuteVolume} className="Controls__volume-btn">
           {volumeIcon}
         </button>
-        <input
+        <div
           style={{
-            background: `linear-gradient(to right, #f50 ${volume}%, #ccc ${volume}%)`,
+            background: `linear-gradient(to right, rgb(255, 85, 0) ${volume}%, rgb(204, 204, 204) 100%)`,
+            display: "inline-block",
           }}
-          type="range"
-          min={0}
-          max={100}
-          value={volume}
-          onChange={handleChangeVolume}
-        />
+        >
+          <input
+            type="range"
+            min={0}
+            max={100}
+            value={volume}
+            onChange={handleChangeVolume}
+          />
+        </div>
       </div>
     </div>
   );

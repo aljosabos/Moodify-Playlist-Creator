@@ -1,3 +1,5 @@
+@import "../../../../assets/scss/breakpoints";
+
 @mixin btn-styles {
   padding: 10px;
   display: flex;
@@ -24,6 +26,11 @@
     svg {
       font-size: 24px;
     }
+
+    @include sm {
+      padding: 0 2px;
+      font-size: 14px;
+    }
   }
 
   &-emojiBtn {
@@ -41,4 +48,9 @@
 .MoodButton-btn-selected {
   @include btn-styles;
   background-color: #d3f393;
+
+  @include sm {
+    padding: 0 2px;
+    font-size: 14px;
+  }
 }

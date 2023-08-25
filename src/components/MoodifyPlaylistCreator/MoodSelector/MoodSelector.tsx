@@ -22,7 +22,7 @@ export default function MoodSelector({
 
   return (
     <div className="MoodSelector">
-      <h2 className="MoodSelector-heading">Choose your mood</h2>
+      <h2 className="MoodSelector-heading">Pick your mood</h2>
       <div className="MoodSelector__btns">
         {Object.keys(Mood).map((mood) => (
           <MoodButton

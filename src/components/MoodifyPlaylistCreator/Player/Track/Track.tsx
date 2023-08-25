@@ -74,9 +74,9 @@ export default function Track({
           {/* )} */}
         </div>
         <div className="Track__info-text">
-          <p className="Track__info-text-title">
+          <h1 className="Track__info-text-title">
             {currentTrack?.title || "No favorite songs"}
-          </p>
+          </h1>
           <p className="Track__info-text-author">
             {currentTrack?.author || "List is empty"}
           </p>

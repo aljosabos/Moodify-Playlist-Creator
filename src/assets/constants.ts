@@ -8,6 +8,9 @@ export const VOLUME_OFF = 5;
 export const VOLUME_LOW = 40;
 export const FAVORITES = "favorites";
 
+export const MEDIUM_WIDTH = 840;
+export const SMALL_WIDTH = 600;
+
 export const playlists = {
   energetic: energeticTracks,
   sad: sadTracks,

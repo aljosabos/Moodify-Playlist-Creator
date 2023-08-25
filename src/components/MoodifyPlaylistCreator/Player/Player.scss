@@ -1,10 +1,16 @@
+@import "../../../assets/scss/breakpoints";
+
 .Player {
-  background: #c1b6bc;
+  background: #ded9d9;
   display: flex;
 
   &__content {
     margin: 0 auto;
     padding: 20px;
     width: 950px;
+
+    @include md {
+      width: 100%;
+    }
   }
 }

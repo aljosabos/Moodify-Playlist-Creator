@@ -1,6 +1,14 @@
+@import "../../../../assets/scss/breakpoints";
+
+@mixin text-overflow {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .SongItem {
-  border-bottom: 1px solid black;
-  padding: 4px;
+  border-bottom: 1px solid white;
+  padding: 4px 8px;
   font-size: 16px;
   display: flex;
   align-items: flex-end;
@@ -18,12 +26,30 @@
     display: flex;
     justify-content: flex-end;
     margin-right: 10px;
+
+    @include sm {
+      display: none;
+    }
   }
 
   &-artist {
     margin-right: 30px;
     margin-left: 5px;
     width: 20%;
+    @include text-overflow();
+
+    @include sm {
+      width: 30%;
+    }
+  }
+
+  &-title {
+    width: 30%;
+    @include text-overflow();
+
+    @include md {
+      width: 40%;
+    }
   }
 
   &__btns {
@@ -56,6 +82,13 @@
       &:hover {
         background-color: #fff5f5;
       }
+    }
+
+    &-star {
+      font-size: 20px;
+      margin-right: 8px;
+      color: orange;
+      cursor: pointer;
     }
   }
 }
