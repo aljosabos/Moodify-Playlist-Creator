@@ -63,15 +63,19 @@ export default function Track({
       />
       <div className="Track__info">
         <div className="audio-image">
-          {/* {currentTrack.thumbnail ? (
-            <img src={currentTrack.thumbnail} alt="audio avatar" />
-          ) : ( */}
-          <div className="Track__info-img">
-            <span className="Track__info-img-icon">
-              <BsMusicNoteBeamed />
-            </span>
-          </div>
-          {/* )} */}
+          {currentTrack?.cover ? (
+            <img
+              src={currentTrack?.cover}
+              alt="audio avatar"
+              className="Track__info-cover"
+            />
+          ) : (
+            <div className="Track__info-img">
+              <span className="Track__info-img-icon">
+                <BsMusicNoteBeamed />
+              </span>
+            </div>
+          )}
         </div>
         <div className="Track__info-text">
           <h1 className="Track__info-text-title">

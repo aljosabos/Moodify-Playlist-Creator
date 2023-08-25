@@ -3,6 +3,12 @@
     display: flex;
     gap: 20px;
 
+    &-cover {
+      width: 260px;
+      height: 260px;
+      border-radius: 5px;
+    }
+
     &-text {
       font-size: 24px;
       font-weight: bold;
@@ -10,7 +16,7 @@
       &-title {
         color: #fff;
         font-weight: 100;
-        font-size: 34px;
+        font-size: 28px;
         margin-bottom: 10px;
         padding: 10px;
         line-height: 37px;

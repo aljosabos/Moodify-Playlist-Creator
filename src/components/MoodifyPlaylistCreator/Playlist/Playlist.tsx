@@ -44,6 +44,7 @@ export default function Playlist({
             mood: playlistMood,
             onClick: (e) => handleDoubleClick(e, index),
             isInFavorites: checkIsTrackInFavorites(playlistMood, id),
+            songIndex: index,
           }}
         />
       ))}

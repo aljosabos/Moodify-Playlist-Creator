@@ -3,6 +3,7 @@ export interface ITrack {
   title: string;
   src: string;
   author: string;
+  cover: string;
 }
 
 export interface ITrackInfo {
