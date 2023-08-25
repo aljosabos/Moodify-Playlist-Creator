@@ -3,17 +3,13 @@ import { useEffect, MutableRefObject } from "react";
 export const useAutoPlayNextSong = (
   audioRef: MutableRefObject<HTMLAudioElement | null>,
   handleNext: () => void,
-  callback?: () => void
+  curentTrackIndex: number
 ) => {
   useEffect(() => {
     const audioElement = audioRef.current;
 
     if (audioElement) {
-      audioElement.addEventListener("ended", () => {
-        handleNext();
-      });
-
-      if (callback) callback();
+      audioElement.addEventListener("ended", handleNext);
     }
 
     return () => {
@@ -21,5 +17,5 @@ export const useAutoPlayNextSong = (
         audioElement.removeEventListener("ended", handleNext);
       }
     };
-  }, []);
+  }, [curentTrackIndex]);
 };

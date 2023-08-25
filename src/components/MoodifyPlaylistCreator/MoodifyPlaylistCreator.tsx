@@ -14,15 +14,28 @@ export default function MoodifyPlaylistCreator() {
     playlists.happy
   );
   const [playerTracks, setPlayerTracks] = useState<ITrack[]>(playlists.happy);
-  const [mood, setMood] = useState<Mood>(Mood.Happy);
+  const [selectedMood, setSelectedMood] = useState<Mood>(Mood.Happy);
   const [currentTrackIndex, setCurrentTrackIndex] = useState<number>(0);
   const [shouldRefreshPlaylists, setShouldRefreshPlaylists] =
     useState<boolean>(false);
   const [shouldRefreshMoods, setShouldRefreshMoods] = useState<boolean>(false);
   const [trackChanged, setTrackChanged] = useState<boolean>(false);
+  const [playerTracksMood, setPlayerTracksMood] = useState<Mood>(Mood.Happy);
 
-  useSetTracks(setPlayerTracks, [trackChanged], mood);
-  useSetTracks(setPlaylistTracks, [mood, shouldRefreshPlaylists], mood);
+  const savePlayerTracksMood = (mood: Mood) => {
+    setPlayerTracksMood(mood);
+  };
+
+  useSetTracks(
+    setPlayerTracks,
+    selectedMood,
+    [trackChanged],
+    savePlayerTracksMood
+  );
+  useSetTracks(setPlaylistTracks, selectedMood, [
+    selectedMood,
+    shouldRefreshPlaylists,
+  ]);
 
   useEffect(() => {
     if (shouldRefreshPlaylists) setShouldRefreshPlaylists(false);
@@ -33,7 +46,7 @@ export default function MoodifyPlaylistCreator() {
   }, [trackChanged]);
 
   const changeMood = (mood: Mood) => {
-    setMood(mood);
+    setSelectedMood(mood);
   };
 
   return (
@@ -51,9 +64,13 @@ export default function MoodifyPlaylistCreator() {
         <MoodContext.Provider
           value={{ shouldRefreshMoods, setShouldRefreshMoods }}
         >
-          <Player tracks={playerTracks} mood={mood} />
-          <MoodSelector changeMood={changeMood} currentMood={mood} />
-          <Playlist tracks={playlistTracks} mood={mood} />
+          <Player tracks={playerTracks} mood={selectedMood} />
+          <MoodSelector changeMood={changeMood} selectedMood={selectedMood} />
+          <Playlist
+            tracks={playlistTracks}
+            playlistMood={selectedMood}
+            playerMood={playerTracksMood}
+          />
         </MoodContext.Provider>
       </TrackContext.Provider>
     </div>

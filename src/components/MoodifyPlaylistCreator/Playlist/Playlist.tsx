@@ -1,6 +1,4 @@
-import {
-  checkIsTrackInFavorites,
-} from "../../../assets/helpers";
+import { checkIsTrackInFavorites } from "../../../assets/helpers";
 import { TrackContext } from "../../../context/TrackContext";
 import { ITrack, Mood } from "../../../types/types";
 import SongItem from "./SongItem/SongItem";
@@ -9,12 +7,20 @@ import "./Playlist.scss";
 
 interface IPlaylistProps {
   tracks: ITrack[];
-  mood: Mood;
+  playlistMood: Mood;
+  playerMood: Mood;
 }
 
-export default function Playlist({ tracks, mood }: IPlaylistProps) {
+export default function Playlist({
+  tracks,
+  playlistMood,
+  playerMood,
+}: IPlaylistProps) {
   const { currentTrackIndex, setCurrentTrackIndex, setTrackChanged } =
     useContext(TrackContext);
+
+  const checkIfSongIsPlaying = (songIndex: number) =>
+    songIndex === currentTrackIndex && playerMood === playlistMood;
 
   const handleDoubleClick = (e: React.MouseEvent, index: number) => {
     const doubleClick = e.detail === 2;
@@ -34,10 +40,10 @@ export default function Playlist({ tracks, mood }: IPlaylistProps) {
             author,
             title,
             listNumber: index + 1,
-            isPlaying: index === currentTrackIndex,
-            mood,
+            isPlaying: checkIfSongIsPlaying(index),
+            mood: playlistMood,
             onClick: (e) => handleDoubleClick(e, index),
-            isInFavorites: checkIsTrackInFavorites(mood, id),
+            isInFavorites: checkIsTrackInFavorites(playlistMood, id),
           }}
         />
       ))}

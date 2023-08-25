@@ -137,7 +137,7 @@ export default function Controls({
       <IoMdVolumeHigh />
     );
 
-  useAutoPlayNextSong(audioRef, handleNext);
+  useAutoPlayNextSong(audioRef, handleNext, currentTrackIndex);
 
   return (
     <div className="Controls">

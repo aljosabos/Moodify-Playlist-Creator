@@ -38,6 +38,7 @@ export default function SongItem({
   const addToFavorites = () => {
     const favoriteTracksInfo = getFavoriteTracksInfo();
     const updatedFavoriteTracksInfo = [...favoriteTracksInfo, { mood, id }];
+
     saveFavoriteTracksInfo(updatedFavoriteTracksInfo);
     setShouldRefreshPlaylists(true);
   };

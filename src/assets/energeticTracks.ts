@@ -3,7 +3,7 @@ import WalkThisWay from "./mp3/energetic/Aerosmith - Walk This Way.mp3";
 import CrazyInLove from "./mp3/energetic/Beyoncé - Crazy In Love.mp3";
 import LivinOnAPrayer from "./mp3/energetic/Bon Jovi - Livin' On A Prayer.mp3";
 import DontStopBelievin from "./mp3/energetic/Journey - Don't Stop Believin.mp3";
-import BillieJean from "./mp3/energetic/Adele - Rolling In The Deep.mp3";
+import BillieJean from "./mp3/energetic/Michael Jackson - Billie Jean.mp3";
 import BohemianRhapsody from "./mp3/energetic/Queen - Bohemian Rhapsody.mp3";
 import EyeOfTheTiger from "./mp3/energetic/Survivor - Eye of the Tiger.mp3";
 import ShakeItOff from "./mp3/energetic/Taylor Swift - Shake It Off.mp3";

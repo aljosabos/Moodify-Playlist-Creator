@@ -7,12 +7,12 @@ import { MoodContext } from "../../../context/MoodContext";
 
 interface IMoodSelectorProps {
   changeMood: (mood: Mood) => void;
-  currentMood: Mood;
+  selectedMood: Mood;
 }
 
 export default function MoodSelector({
   changeMood,
-  currentMood,
+  selectedMood,
 }: IMoodSelectorProps) {
   const { shouldRefreshMoods, setShouldRefreshMoods } = useContext(MoodContext);
 
@@ -30,7 +30,7 @@ export default function MoodSelector({
             mood={Mood[mood as MoodEnumKey]}
             changeMood={changeMood}
             emoji={getEmoji(Mood[mood as MoodEnumKey])}
-            isSelected={currentMood === Mood[mood as MoodEnumKey]}
+            isSelected={selectedMood === Mood[mood as MoodEnumKey]}
           />
         ))}
       </div>
