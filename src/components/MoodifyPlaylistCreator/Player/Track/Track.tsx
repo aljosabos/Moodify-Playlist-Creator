@@ -15,7 +15,7 @@ import useOutsideClick from "../../../../hooks/useOutsideClick";
 interface ITrackProps {
   currentTrack?: ITrack;
   audioRef: MutableRefObject<HTMLAudioElement | null>;
-  setDuration: React.Dispatch<React.SetStateAction<number>>;
+  setTrackDuration: React.Dispatch<React.SetStateAction<number>>;
   progressBarRef: MutableRefObject<HTMLInputElement | null>;
   mood: Mood;
 }
@@ -23,7 +23,7 @@ interface ITrackProps {
 export default function Track({
   currentTrack,
   audioRef,
-  setDuration,
+  setTrackDuration,
   progressBarRef,
   mood,
 }: ITrackProps) {
@@ -43,7 +43,7 @@ export default function Track({
   const onLoadedMetadata = () => {
     if (audioRef.current) {
       const seconds = Math.floor(audioRef.current.duration);
-      setDuration(seconds);
+      setTrackDuration(seconds);
       (progressBarRef.current as HTMLInputElement).max = seconds.toString();
     }
   };

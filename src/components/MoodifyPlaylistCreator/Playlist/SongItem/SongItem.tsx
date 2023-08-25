@@ -22,7 +22,6 @@ interface ISongItemProps {
   onClick: (e: React.MouseEvent) => void;
   mood: string;
   isInFavorites: boolean;
-  songIndex: number;
 }
 
 export default function SongItem({
@@ -34,12 +33,10 @@ export default function SongItem({
   onClick,
   mood,
   isInFavorites,
-  songIndex,
 }: ISongItemProps) {
   const songPlaybackStyle = isPlaying ? "playback" : "";
 
-  const { currentTrackIndex, setCurrentTrackIndex, setShouldRefreshPlaylists } =
-    useContext(TrackContext);
+  const { setShouldRefreshPlaylists } = useContext(TrackContext);
   const { isResized } = useIsResized(SMALL_WIDTH);
 
   const addToFavorites = () => {

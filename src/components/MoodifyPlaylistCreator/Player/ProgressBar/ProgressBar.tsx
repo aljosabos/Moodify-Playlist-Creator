@@ -6,14 +6,14 @@ interface IProgressBarProps {
   progressBarRef: MutableRefObject<HTMLInputElement | null>;
   audioRef: MutableRefObject<HTMLAudioElement | null>;
   timeProgress: number;
-  duration: number;
+  trackDuration: number;
 }
 
 export default function ProgressBar({
   progressBarRef,
   audioRef,
   timeProgress,
-  duration,
+  trackDuration,
 }: IProgressBarProps) {
   const handleOnChange = () => {
     if (progressBarRef.current) {
@@ -34,7 +34,7 @@ export default function ProgressBar({
         defaultValue={0}
       />
       <span className="ProgressBar-time">
-        {formatSecondsToSongTime(duration)}
+        {formatSecondsToSongTime(trackDuration)}
       </span>
     </div>
   );

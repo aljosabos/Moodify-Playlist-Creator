@@ -21,12 +21,11 @@ import { IoMdVolumeHigh, IoMdVolumeOff, IoMdVolumeLow } from "react-icons/io";
 import { SKIP_TIME } from "../../../../assets/constants";
 import { useAutoPlayNextSong } from "../../../../hooks/useAutoPlayNextSong";
 import { TrackContext } from "../../../../context/TrackContext";
-import { useIsStateChanged } from "../../../../hooks/useIsStateChanged";
 
 interface IControlProps {
   progressBarRef: MutableRefObject<HTMLInputElement | null>;
   audioRef: MutableRefObject<HTMLAudioElement | null>;
-  duration: number;
+  trackDuration: number;
   setTimeProgress: React.Dispatch<React.SetStateAction<number>>;
   playlistLength: number;
 }
@@ -34,11 +33,10 @@ interface IControlProps {
 export default function Controls({
   progressBarRef,
   audioRef,
-  duration,
+  trackDuration,
   setTimeProgress,
   playlistLength,
 }: IControlProps) {
-  const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(60);
   const [muteVolume, setMuteVolume] = useState(false);
 
@@ -46,8 +44,7 @@ export default function Controls({
 
   const { currentTrackIndex, setCurrentTrackIndex } = useContext(TrackContext);
 
-  const { isStateChanged: isTrackChanged } =
-    useIsStateChanged(currentTrackIndex);
+  const { isPlaying, setIsPlaying } = useContext(TrackContext);
 
   const step = useCallback(() => {
     const currentTime = audioRef.current
@@ -64,21 +61,17 @@ export default function Controls({
         "--range-progress",
         `${
           (parseInt((progressBarRef.current as HTMLInputElement).value) /
-            duration) *
+            trackDuration) *
           100
         }%`
       );
     }
     playAnimationRef.current = requestAnimationFrame(step);
-  }, [audioRef, duration, progressBarRef, setTimeProgress]);
+  }, [audioRef, trackDuration, progressBarRef, setTimeProgress]);
 
   const togglePlay = () => {
     setIsPlaying((currentStatus) => !currentStatus);
   };
-
-  useEffect(() => {
-    if (isTrackChanged) setIsPlaying(true);
-  }, [isTrackChanged]);
 
   useEffect(() => {
     if (isPlaying && audioRef.current) {

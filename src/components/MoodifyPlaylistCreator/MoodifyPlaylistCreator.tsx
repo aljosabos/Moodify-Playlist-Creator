@@ -2,7 +2,7 @@ import MoodSelector from "./MoodSelector/MoodSelector";
 import Player from "./Player/Player";
 import "./MoodifyPlaylistCreator.scss";
 import Playlist from "./Playlist/Playlist";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ITrack, Mood } from "../../types/types";
 import { TrackContext } from "../../context/TrackContext";
 import { playlists } from "../../assets/constants";
@@ -16,11 +16,16 @@ export default function MoodifyPlaylistCreator() {
   const [playerTracks, setPlayerTracks] = useState<ITrack[]>(playlists.happy);
   const [selectedMood, setSelectedMood] = useState<Mood>(Mood.Happy);
   const [currentTrackIndex, setCurrentTrackIndex] = useState<number>(0);
+  const [currentPlayingTrackId, setCurrentPlayingTrackId] =
+    useState<string>("");
   const [shouldRefreshPlaylists, setShouldRefreshPlaylists] =
     useState<boolean>(false);
   const [shouldRefreshMoods, setShouldRefreshMoods] = useState<boolean>(false);
   const [trackChanged, setTrackChanged] = useState<boolean>(false);
   const [playerTracksMood, setPlayerTracksMood] = useState<Mood>(Mood.Happy);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const savePlayerTracksMood = (mood: Mood) => {
     setPlayerTracksMood(mood);
@@ -57,6 +62,9 @@ export default function MoodifyPlaylistCreator() {
           setCurrentTrackIndex,
           shouldRefreshPlaylists,
           setShouldRefreshPlaylists,
+          isPlaying,
+          setIsPlaying,
+          audioRef,
           trackChanged,
           setTrackChanged,
         }}
@@ -64,12 +72,16 @@ export default function MoodifyPlaylistCreator() {
         <MoodContext.Provider
           value={{ shouldRefreshMoods, setShouldRefreshMoods }}
         >
-          <Player tracks={playerTracks} mood={selectedMood} />
+          <Player
+            tracks={playerTracks}
+            mood={selectedMood}
+            setCurrentPlayingTrackId={setCurrentPlayingTrackId}
+          />
           <MoodSelector changeMood={changeMood} selectedMood={selectedMood} />
           <Playlist
             tracks={playlistTracks}
             playlistMood={selectedMood}
-            playerMood={playerTracksMood}
+            currentPlayingTrackId={currentPlayingTrackId}
           />
         </MoodContext.Provider>
       </TrackContext.Provider>

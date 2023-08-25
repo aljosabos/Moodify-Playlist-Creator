@@ -1,4 +1,7 @@
-import { checkIsTrackInFavorites } from "../../../assets/helpers";
+import {
+  checkIsTrackInFavorites,
+  restartPlayback,
+} from "../../../assets/helpers";
 import { TrackContext } from "../../../context/TrackContext";
 import { ITrack, Mood } from "../../../types/types";
 import SongItem from "./SongItem/SongItem";
@@ -8,23 +11,33 @@ import "./Playlist.scss";
 interface IPlaylistProps {
   tracks: ITrack[];
   playlistMood: Mood;
-  playerMood: Mood;
+  currentPlayingTrackId: string;
 }
 
 export default function Playlist({
   tracks,
   playlistMood,
-  playerMood,
+  currentPlayingTrackId,
 }: IPlaylistProps) {
-  const { currentTrackIndex, setCurrentTrackIndex, setTrackChanged } =
-    useContext(TrackContext);
+  const {
+    setCurrentTrackIndex,
+    isPlaying,
+    setIsPlaying,
+    audioRef,
+    setTrackChanged,
+  } = useContext(TrackContext);
 
-  const checkIfSongIsPlaying = (songIndex: number) =>
-    songIndex === currentTrackIndex && playerMood === playlistMood;
+  const checkIfSongIsPlaying = (trackId: string) =>
+    trackId === currentPlayingTrackId;
 
   const handleDoubleClick = (e: React.MouseEvent, index: number) => {
     const doubleClick = e.detail === 2;
     if (doubleClick) {
+      if (isPlaying) {
+        restartPlayback(audioRef);
+      } else {
+        setIsPlaying(true);
+      }
       setCurrentTrackIndex(index);
       setTrackChanged(true);
     }
@@ -40,7 +53,7 @@ export default function Playlist({
             author,
             title,
             listNumber: index + 1,
-            isPlaying: checkIfSongIsPlaying(index),
+            isPlaying: checkIfSongIsPlaying(id),
             mood: playlistMood,
             onClick: (e) => handleDoubleClick(e, index),
             isInFavorites: checkIsTrackInFavorites(playlistMood, id),

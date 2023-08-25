@@ -7,6 +7,7 @@ import {
   Mood,
 } from "../types/types";
 import { FAVORITES } from "./constants";
+import { MutableRefObject } from "react";
 
 export const formatSecondsToSongTime = (totalSeconds: number) => {
   const duration = moment.duration(Math.floor(totalSeconds), "seconds");
@@ -81,3 +82,13 @@ export const saveEmoji = (emojiData: EmojiClickData, mood: string) => {
 
 export const capitalizeString = (str: string) =>
   str.charAt(0).toUpperCase() + str.slice(1);
+
+export const restartPlayback = (
+  audioRef: MutableRefObject<HTMLAudioElement | null>
+) => {
+  if (audioRef.current) {
+    audioRef.current.pause();
+    audioRef.current.currentTime = 0;
+    audioRef.current.play();
+  }
+};
