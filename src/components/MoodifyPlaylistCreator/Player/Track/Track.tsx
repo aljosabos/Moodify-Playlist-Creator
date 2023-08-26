@@ -63,18 +63,12 @@ export default function Track({
       />
       <div className="Track__info">
         <div className="audio-image">
-          {currentTrack?.cover ? (
+          {currentTrack?.cover && (
             <img
               src={currentTrack?.cover}
               alt="audio avatar"
               className="Track__info-cover"
             />
-          ) : (
-            <div className="Track__info-img">
-              <span className="Track__info-img-icon">
-                <BsMusicNoteBeamed />
-              </span>
-            </div>
           )}
         </div>
         <div className="Track__info-text">

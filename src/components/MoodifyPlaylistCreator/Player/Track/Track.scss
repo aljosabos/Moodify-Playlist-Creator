@@ -1,3 +1,5 @@
+@import "../../../../assets/scss/breakpoints";
+
 .Track {
   &__info {
     display: flex;
@@ -32,33 +34,10 @@
         font-size: 18px;
         margin-right: 10px;
         color: black;
-      }
-    }
 
-    &-img {
-      width: 250px;
-      height: 250px;
-      background: #1e1e1e;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border-radius: 5px;
-      img {
-        object-fit: cover;
-        width: 100%;
-        height: 100%;
-        vertical-align: middle;
-      }
-
-      &-icon {
-        font-size: 40px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 80px;
-        width: 80px;
-        border-radius: 50%;
-        background: #989898;
+        @include md {
+          display: none;
+        }
       }
     }
   }
@@ -68,6 +47,15 @@
     top: 50px;
     left: 0;
     z-index: 1000;
+
+    @include md {
+      width: 300px !important;
+      height: 415px !important;
+    }
+
+    @include sm {
+      left: -270px;
+    }
   }
 
   &_emoji {

@@ -157,20 +157,15 @@ export default function Controls({
         <button onClick={toggleMuteVolume} className="Controls__volume-btn">
           {volumeIcon}
         </button>
-        <div
-          style={{
-            background: `linear-gradient(to right, rgb(255, 85, 0) ${volume}%, rgb(204, 204, 204) 100%)`,
-            display: "inline-block",
-          }}
-        >
-          <input
-            type="range"
-            min={0}
-            max={100}
-            value={volume}
-            onChange={handleChangeVolume}
-          />
-        </div>
+
+        <input
+          type="range"
+          min={0}
+          max={100}
+          value={volume}
+          onChange={handleChangeVolume}
+          className="Controls__volume-input"
+        />
       </div>
     </div>
   );

@@ -1,3 +1,9 @@
+@mixin x-sm {
+  @media (max-width: 470px) {
+    @content;
+  }
+}
+
 @mixin sm {
   @media (max-width: 600px) {
     @content;
