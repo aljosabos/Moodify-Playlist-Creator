@@ -51,7 +51,7 @@ export default function Track({
   };
 
   const handleEmojiSelect = (emojiData: EmojiClickData) => {
-    saveEmoji(emojiData, mood);
+    saveEmoji(emojiData.emoji, mood);
     setShouldShowEmojiPicker(false);
     setShouldRefreshMoods(true);
   };

@@ -17,3 +17,11 @@ export const playlists = {
   happy: happyTracks,
   relaxed: relaxedTracks,
 };
+
+export const INITIAL_EMOJIS = {
+  happy: "😄",
+  sad: "😢",
+  relaxed: "😎",
+  energetic: "😎",
+  favorites: "🌟",
+};

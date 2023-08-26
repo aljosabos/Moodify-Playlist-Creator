@@ -1,12 +1,6 @@
 import moment from "moment";
-import {
-  EmojiClickData,
-  IEmoji,
-  IPlaylists,
-  ITrackInfo,
-  Mood,
-} from "../types/types";
-import { FAVORITES } from "./constants";
+import { IPlaylists, ITrackInfo, Mood } from "../types/types";
+import { FAVORITES, INITIAL_EMOJIS } from "./constants";
 import { MutableRefObject } from "react";
 
 export const formatSecondsToTrackTime = (totalSeconds: number) => {
@@ -53,30 +47,20 @@ export const getEmojis = () => {
   if (emojisJSON) {
     return JSON.parse(emojisJSON);
   } else {
-    return [
-      { mood: "happy", emoji: "😄" },
-      { mood: "sad", emoji: "😢" },
-      { mood: "energetic", emoji: "💥" },
-      { mood: "relaxed", emoji: "😎" },
-      { mood: "favorites", emoji: "🌟" },
-    ];
+    return INITIAL_EMOJIS;
   }
 };
 
 export const getEmoji = (mood: Mood) => {
   const emojis = getEmojis();
-
-  const emojiData = emojis.find((emoji: IEmoji) => emoji.mood === mood);
-  return emojiData.emoji;
+  return emojis[mood];
 };
 
-export const saveEmoji = (emojiData: EmojiClickData, mood: string) => {
+export const saveEmoji = (emoji: string, mood: string) => {
   const emojis = getEmojis();
 
-  const updatedEmojis = emojis.map((emoji: IEmoji) =>
-    emoji.mood === mood ? { mood, emoji: emojiData.emoji } : emoji
-  );
-
+  const updatedEmojis = { ...emojis };
+  updatedEmojis[mood] = emoji;
   localStorage.setItem("emojis", JSON.stringify(updatedEmojis));
 };
 
