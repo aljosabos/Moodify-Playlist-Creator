@@ -5,7 +5,7 @@ import {
   getFavoriteTracksInfo,
   saveFavoriteTracksInfo,
 } from "../../../../assets/helpers";
-import { useContext } from "react";
+import { MouseEventHandler, useContext } from "react";
 import { TrackContext } from "../../../../context/TrackContext";
 import { Mood } from "../../../../types/types";
 import { BsFillStarFill } from "react-icons/bs";
@@ -47,7 +47,8 @@ export default function PlaylistItem({
     setShouldRefreshPlaylists(true);
   };
 
-  const removeFromFavorites = () => {
+  const removeFromFavorites = (e: React.MouseEvent) => {
+    e.stopPropagation();
     if (isPlaying) return;
     const favoriteTracksInfo = getFavoriteTracksInfo();
 
@@ -58,9 +59,14 @@ export default function PlaylistItem({
     setShouldRefreshPlaylists(true);
   };
 
+  const removeBtnModifier = isPlaying ? "--disabled" : "";
+
   const btnJSX =
     mood === Mood.Favorites ? (
-      <button onClick={removeFromFavorites} className="PlaylistItem-btn">
+      <button
+        onClick={removeFromFavorites}
+        className={`PlaylistItem-btn${removeBtnModifier}`}
+      >
         <BsFillTrashFill />
         <span>Remove</span>
       </button>

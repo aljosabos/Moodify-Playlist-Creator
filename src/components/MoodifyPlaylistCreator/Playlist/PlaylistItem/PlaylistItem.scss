@@ -6,6 +6,18 @@
   text-overflow: ellipsis;
 }
 
+@mixin btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  background-color: transparent;
+  gap: 4px;
+  transition: all 0.2s;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
 .PlaylistItem {
   border-bottom: 1px solid white;
   padding: 4px 8px;
@@ -56,15 +68,12 @@
   }
 
   &-btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: none;
-    background-color: transparent;
-    gap: 4px;
-    transition: all 0.2s;
-    border-radius: 5px;
-    cursor: pointer;
+    @include btn;
+
+    &--disabled {
+      @include btn;
+      color: grey;
+    }
 
     &:hover {
       background-color: #fff5f5;
