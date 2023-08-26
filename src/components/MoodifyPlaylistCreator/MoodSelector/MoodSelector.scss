@@ -8,6 +8,10 @@
     justify-content: space-evenly;
   }
 
+  @include x-sm {
+    padding: 0 10px;
+  }
+
   &-heading {
     margin-right: 90px;
     margin-left: 8px;

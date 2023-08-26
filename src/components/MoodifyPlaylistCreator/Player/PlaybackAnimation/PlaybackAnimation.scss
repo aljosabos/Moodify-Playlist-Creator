@@ -1,3 +1,5 @@
+@import "../../../../assets/scss/breakpoints";
+
 @mixin bars {
   display: inline-block;
   width: 30%;
@@ -14,6 +16,11 @@
   align-items: flex-end;
   box-sizing: border-box;
   margin-top: 20px;
+
+  @include x-sm {
+    width: 30px;
+    height: 30px;
+  }
 
   &__bar {
     @include bars;
