@@ -1,6 +1,6 @@
 import moment from "moment";
 import { IPlaylists, ITrackInfo, Mood } from "../types/types";
-import { FAVORITES, INITIAL_EMOJIS } from "./constants";
+import { EMOJIS, FAVORITES, INITIAL_EMOJIS } from "./constants";
 import { MutableRefObject } from "react";
 
 export const formatSecondsToTrackTime = (totalSeconds: number) => {
@@ -42,7 +42,7 @@ export const checkIsTrackInFavorites = (mood: Mood, songId: string) => {
 };
 
 export const getEmojis = () => {
-  const emojisJSON = localStorage.getItem("emojis");
+  const emojisJSON = localStorage.getItem(EMOJIS);
 
   if (emojisJSON) {
     return JSON.parse(emojisJSON);
@@ -61,7 +61,7 @@ export const saveEmoji = (emoji: string, mood: string) => {
 
   const updatedEmojis = { ...emojis };
   updatedEmojis[mood] = emoji;
-  localStorage.setItem("emojis", JSON.stringify(updatedEmojis));
+  localStorage.setItem(EMOJIS, JSON.stringify(updatedEmojis));
 };
 
 export const capitalizeString = (str: string) =>

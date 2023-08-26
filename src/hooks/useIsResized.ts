@@ -16,5 +16,6 @@ export const useIsResized = (width: number) => {
       window.removeEventListener("resize", handleResize);
     };
   }, [width]);
+
   return { isResized };
 };
