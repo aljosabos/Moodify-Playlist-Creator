@@ -24,6 +24,7 @@
         line-height: 37px;
         background-color: rgba(0, 0, 0, 0.8);
         border-radius: 5px;
+        margin-bottom: 25px;
 
         @include sm {
           font-size: 22px;
@@ -32,7 +33,7 @@
       }
 
       &-author {
-        height: 50px;
+        height: 40px;
 
         @include sm {
           font-size: 20px;
@@ -40,7 +41,7 @@
       }
 
       &-playlist {
-        font-size: 18px;
+        font-size: 16px;
         margin-right: 10px;
         color: black;
 
