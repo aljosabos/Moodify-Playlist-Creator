@@ -4,7 +4,7 @@ import {
 } from "../../../assets/helpers";
 import { TrackContext } from "../../../context/TrackContext";
 import { ITrack, Mood } from "../../../types/types";
-import SongItem from "./SongItem/SongItem";
+import PlaylistItem from "./PlaylistItem/PlaylistItem";
 import { useContext } from "react";
 import "./Playlist.scss";
 
@@ -54,7 +54,7 @@ export default function Playlist({
   return (
     <div className="Playlist">
       {tracks?.map(({ author, title, id }, index) => (
-        <SongItem
+        <PlaylistItem
           key={id}
           {...{
             id,

@@ -1,6 +1,6 @@
 import { BiPlusMedical } from "react-icons/bi";
 import { BsFillTrashFill } from "react-icons/bs";
-import "./SongItem.scss";
+import "./PlaylistItem.scss";
 import {
   getFavoriteTracksInfo,
   saveFavoriteTracksInfo,
@@ -13,7 +13,7 @@ import { AiOutlineStar } from "react-icons/ai";
 import { useIsResized } from "../../../../hooks/useIsResized";
 import { SMALL_WIDTH } from "../../../../assets/constants";
 
-interface ISongItemProps {
+interface IPlaylistItemProps {
   id: string;
   author: string;
   title: string;
@@ -24,7 +24,7 @@ interface ISongItemProps {
   isInFavorites: boolean;
 }
 
-export default function SongItem({
+export default function PlaylistItem({
   id,
   author,
   title,
@@ -33,7 +33,7 @@ export default function SongItem({
   onClick,
   mood,
   isInFavorites,
-}: ISongItemProps) {
+}: IPlaylistItemProps) {
   const songPlaybackStyle = isPlaying ? "playback" : "";
 
   const { setShouldRefreshPlaylists } = useContext(TrackContext);
