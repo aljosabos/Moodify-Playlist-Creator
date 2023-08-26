@@ -10,6 +10,8 @@ import EmojiPicker from "emoji-picker-react";
 import { useState, useContext, useRef } from "react";
 import { MoodContext } from "../../../../context/MoodContext";
 import useOutsideClick from "../../../../hooks/useOutsideClick";
+import PlaybackAnimation from "../PlaybackAnimation/PlaybackAnimation";
+import { TrackContext } from "../../../../context/TrackContext";
 
 interface ITrackProps {
   currentTrack?: ITrack;
@@ -32,6 +34,7 @@ export default function Track({
   const emojiPickerRef = useRef<HTMLSpanElement | null>(null);
 
   const { setShouldRefreshMoods } = useContext(MoodContext);
+  const { isPlaying } = useContext(TrackContext);
 
   useOutsideClick(emojiPickerRef, () => setShouldShowEmojiPicker(false));
 
@@ -81,6 +84,7 @@ export default function Track({
           <span className="Track__info-text-playlist">
             Mood: {capitalizeString(mood)}
           </span>
+
           <span
             onClick={openEmojiPicker}
             ref={emojiPickerRef}
@@ -98,6 +102,8 @@ export default function Track({
               />
             )}
           </span>
+
+          <PlaybackAnimation isPlaying={isPlaying} />
         </div>
       </div>
     </div>
