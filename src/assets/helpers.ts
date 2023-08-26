@@ -9,7 +9,7 @@ import {
 import { FAVORITES } from "./constants";
 import { MutableRefObject } from "react";
 
-export const formatSecondsToSongTime = (totalSeconds: number) => {
+export const formatSecondsToTrackTime = (totalSeconds: number) => {
   const duration = moment.duration(Math.floor(totalSeconds), "seconds");
 
   const minutes = duration.minutes();

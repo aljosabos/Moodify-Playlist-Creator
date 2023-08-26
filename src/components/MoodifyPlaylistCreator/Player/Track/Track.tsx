@@ -1,6 +1,5 @@
 import { EmojiClickData, ITrack, Mood } from "../../../../types/types";
 import { MutableRefObject } from "react";
-import { BsMusicNoteBeamed } from "react-icons/bs";
 import "./Track.scss";
 import {
   capitalizeString,

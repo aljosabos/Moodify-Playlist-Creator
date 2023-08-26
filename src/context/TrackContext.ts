@@ -8,8 +8,8 @@ export interface ITrackContext {
   isPlaying: boolean;
   setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>;
   audioRef: MutableRefObject<HTMLAudioElement | null>;
-  trackChanged: boolean;
-  setTrackChanged: React.Dispatch<React.SetStateAction<boolean>>;
+  isTrackSelected: boolean;
+  setIsTrackSelected: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const TrackContext = createContext({} as ITrackContext);

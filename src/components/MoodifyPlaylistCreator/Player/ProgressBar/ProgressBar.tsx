@@ -1,4 +1,4 @@
-import { formatSecondsToSongTime } from "../../../../assets/helpers";
+import { formatSecondsToTrackTime } from "../../../../assets/helpers";
 import "./ProgressBar.scss";
 import { MutableRefObject } from "react";
 
@@ -25,7 +25,7 @@ export default function ProgressBar({
   return (
     <div className="ProgressBar">
       <span className="ProgressBar-time current">
-        {formatSecondsToSongTime(timeProgress)}
+        {formatSecondsToTrackTime(timeProgress)}
       </span>
       <input
         onChange={handleOnChange}
@@ -34,7 +34,7 @@ export default function ProgressBar({
         defaultValue={0}
       />
       <span className="ProgressBar-time">
-        {formatSecondsToSongTime(trackDuration)}
+        {formatSecondsToTrackTime(trackDuration)}
       </span>
     </div>
   );

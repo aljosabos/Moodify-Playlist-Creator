@@ -24,10 +24,19 @@
         line-height: 37px;
         background-color: rgba(0, 0, 0, 0.8);
         border-radius: 5px;
+
+        @include sm {
+          font-size: 22px;
+          padding: 5px;
+        }
       }
 
       &-author {
         height: 50px;
+
+        @include sm {
+          font-size: 20px;
+        }
       }
 
       &-playlist {

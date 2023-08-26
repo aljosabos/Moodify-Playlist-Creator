@@ -11,12 +11,14 @@ import "./Playlist.scss";
 interface IPlaylistProps {
   tracks: ITrack[];
   playlistMood: Mood;
+  playerMood: Mood;
   currentPlayingTrackId: string;
 }
 
 export default function Playlist({
   tracks,
   playlistMood,
+  playerMood,
   currentPlayingTrackId,
 }: IPlaylistProps) {
   const {
@@ -24,23 +26,29 @@ export default function Playlist({
     isPlaying,
     setIsPlaying,
     audioRef,
-    setTrackChanged,
+    setIsTrackSelected,
   } = useContext(TrackContext);
 
   const checkIfSongIsPlaying = (trackId: string) =>
-    trackId === currentPlayingTrackId;
+    playlistMood === playerMood && trackId === currentPlayingTrackId;
 
-  const handleDoubleClick = (e: React.MouseEvent, index: number) => {
-    const doubleClick = e.detail === 2;
-    if (doubleClick) {
+  let lastClickTime = 0;
+
+  const handleDoubleClick = (index: number) => {
+    const currentTime = new Date().getTime();
+    const timeSinceLastClick = currentTime - lastClickTime;
+
+    if (timeSinceLastClick <= 300) {
       if (isPlaying) {
         restartPlayback(audioRef);
       } else {
         setIsPlaying(true);
       }
       setCurrentTrackIndex(index);
-      setTrackChanged(true);
+      setIsTrackSelected(true);
     }
+
+    lastClickTime = currentTime;
   };
 
   return (
@@ -55,7 +63,7 @@ export default function Playlist({
             listNumber: index + 1,
             isPlaying: checkIfSongIsPlaying(id),
             mood: playlistMood,
-            onClick: (e) => handleDoubleClick(e, index),
+            onClick: () => handleDoubleClick(index),
             isInFavorites: checkIsTrackInFavorites(playlistMood, id),
             songIndex: index,
           }}

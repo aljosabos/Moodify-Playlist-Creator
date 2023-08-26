@@ -6,7 +6,7 @@
   text-overflow: ellipsis;
 }
 
-.SongItem {
+.PlaylistItem {
   border-bottom: 1px solid white;
   padding: 4px 8px;
   font-size: 15px;
@@ -16,6 +16,7 @@
   cursor: pointer;
   user-select: none;
   height: 30px;
+  justify-content: space-around;
 
   &:hover {
     background-color: #f3efef;
@@ -26,6 +27,8 @@
     display: flex;
     justify-content: flex-end;
     margin-right: 10px;
+    display: flex;
+    justify-self: center;
 
     @include sm {
       display: none;
@@ -52,44 +55,44 @@
     }
   }
 
+  &-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    background-color: transparent;
+    gap: 4px;
+    transition: all 0.2s;
+    border-radius: 5px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #fff5f5;
+    }
+  }
+
   &__btns {
     display: flex;
     align-items: center;
     margin-left: auto;
+  }
 
-    &-favorites {
-      font-size: 13px;
-      font-weight: bold;
-      color: #0dd60d;
-      padding: 4px 10px;
-      border-radius: 4px;
-      gap: 5px;
-      align-items: flex-end;
-      display: flex;
-    }
+  &-favorites {
+    font-size: 13px;
+    font-weight: bold;
+    color: #0dd60d;
+    padding: 4px 10px;
+    border-radius: 4px;
+    gap: 5px;
+    align-items: flex-end;
+    display: flex;
+  }
 
-    button {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border: none;
-      background-color: transparent;
-      gap: 4px;
-      transition: all 0.2s;
-      border-radius: 5px;
-      cursor: pointer;
-
-      &:hover {
-        background-color: #fff5f5;
-      }
-    }
-
-    &-star {
-      font-size: 20px;
-      margin-right: 8px;
-      color: orange;
-      cursor: pointer;
-    }
+  &-star {
+    font-size: 20px;
+    margin-right: 8px;
+    color: orange;
+    cursor: pointer;
   }
 }
 

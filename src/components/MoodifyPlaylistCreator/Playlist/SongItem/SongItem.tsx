@@ -60,14 +60,14 @@ export default function SongItem({
 
   const btnJSX =
     mood === Mood.Favorites ? (
-      <button onClick={removeFromFavorites}>
+      <button onClick={removeFromFavorites} className="PlaylistItem-btn">
         <BsFillTrashFill />
         <span>Remove</span>
       </button>
     ) : (
-      <button onClick={addToFavorites}>
+      <button onClick={addToFavorites} className="PlaylistItem-btn">
         {isResized ? (
-          <BsFillStarFill className="SongItem__btns-star" />
+          <BsFillStarFill className="PlaylistItem-star" />
         ) : (
           <BiPlusMedical />
         )}
@@ -76,14 +76,14 @@ export default function SongItem({
     );
 
   return (
-    <div className={`SongItem ${songPlaybackStyle}`} onClick={onClick}>
-      <span className="SongItem-listNumber">{listNumber}.</span>
-      <span className="SongItem-artist">{author}</span>
-      <span className="SongItem-title">{title}</span>
-      <div className="SongItem__btns">
+    <div className={`PlaylistItem ${songPlaybackStyle}`} onClick={onClick}>
+      <span className="PlaylistItem-listNumber">{listNumber}.</span>
+      <span className="PlaylistItem-artist">{author}</span>
+      <span className="PlaylistItem-title">{title}</span>
+      <div className="PlaylistItem__btns">
         {isInFavorites ? (
-          <span className="SongItem__btns-favorites">
-            <AiOutlineStar />
+          <span className="PlaylistItem-favorites">
+            {!isResized && <AiOutlineStar />}
             In Favorites
           </span>
         ) : (

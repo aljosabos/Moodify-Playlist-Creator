@@ -21,6 +21,8 @@ import { IoMdVolumeHigh, IoMdVolumeOff, IoMdVolumeLow } from "react-icons/io";
 import { SKIP_TIME } from "../../../../assets/constants";
 import { useAutoPlayNextSong } from "../../../../hooks/useAutoPlayNextSong";
 import { TrackContext } from "../../../../context/TrackContext";
+import { restartPlayback } from "../../../../assets/helpers";
+import { duration } from "moment";
 
 interface IControlProps {
   progressBarRef: MutableRefObject<HTMLInputElement | null>;
@@ -28,6 +30,7 @@ interface IControlProps {
   trackDuration: number;
   setTimeProgress: React.Dispatch<React.SetStateAction<number>>;
   playlistLength: number;
+  timeProgress: number;
 }
 
 export default function Controls({
@@ -36,6 +39,7 @@ export default function Controls({
   trackDuration,
   setTimeProgress,
   playlistLength,
+  timeProgress,
 }: IControlProps) {
   const [volume, setVolume] = useState(60);
   const [muteVolume, setMuteVolume] = useState(false);
@@ -70,7 +74,7 @@ export default function Controls({
   }, [audioRef, trackDuration, progressBarRef, setTimeProgress]);
 
   const togglePlay = () => {
-    setIsPlaying((currentStatus) => !currentStatus);
+    setIsPlaying((currentState) => !currentState);
   };
 
   useEffect(() => {
@@ -96,7 +100,9 @@ export default function Controls({
     if (audioRef.current) audioRef.current.currentTime -= SKIP_TIME;
   };
 
-  const handlePrevious = () => {
+  const handlePreviousTrack = () => {
+    if (timeProgress) return restartPlayback(audioRef);
+
     if (currentTrackIndex === 0) {
       let lastTrackIndex = playlistLength - 1;
       setCurrentTrackIndex(lastTrackIndex);
@@ -105,7 +111,7 @@ export default function Controls({
     }
   };
 
-  const handleNext = () => {
+  const handleNextTrack = () => {
     if (currentTrackIndex >= playlistLength - 1) {
       setCurrentTrackIndex(0);
     } else {
@@ -118,7 +124,7 @@ export default function Controls({
   };
 
   const toggleMuteVolume = () => {
-    setMuteVolume((prev) => !prev);
+    setMuteVolume((currentState) => !currentState);
   };
 
   const volumeIcon =
@@ -130,12 +136,12 @@ export default function Controls({
       <IoMdVolumeHigh />
     );
 
-  useAutoPlayNextSong(audioRef, handleNext, currentTrackIndex);
+  useAutoPlayNextSong(audioRef, handleNextTrack, currentTrackIndex);
 
   return (
     <div className="Controls">
       <div className="Controls__content">
-        <button onClick={handlePrevious}>
+        <button onClick={handlePreviousTrack}>
           <IoPlaySkipBackSharp />
         </button>
         <button onClick={skipBackward}>
@@ -148,7 +154,7 @@ export default function Controls({
         <button onClick={skipForward}>
           <IoPlayForwardSharp />
         </button>
-        <button onClick={handleNext}>
+        <button onClick={handleNextTrack}>
           <IoPlaySkipForwardSharp />
         </button>
       </div>

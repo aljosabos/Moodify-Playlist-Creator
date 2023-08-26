@@ -20,7 +20,6 @@ export default function Player({
   const { currentTrackIndex, audioRef } = useContext(TrackContext);
 
   const [timeProgress, setTimeProgress] = useState(0);
-
   const [trackDuration, setTrackDuration] = useState(0);
   const [currentTrack, setCurrentTrack] = useState<ITrack>();
 
@@ -55,6 +54,7 @@ export default function Player({
             trackDuration,
             setTimeProgress,
             playlistLength: tracks?.length,
+            timeProgress
           }}
         />
         <ProgressBar

@@ -21,7 +21,7 @@ export default function MoodifyPlaylistCreator() {
   const [shouldRefreshPlaylists, setShouldRefreshPlaylists] =
     useState<boolean>(false);
   const [shouldRefreshMoods, setShouldRefreshMoods] = useState<boolean>(false);
-  const [trackChanged, setTrackChanged] = useState<boolean>(false);
+  const [isTrackSelected, setIsTrackSelected] = useState<boolean>(false);
   const [playerTracksMood, setPlayerTracksMood] = useState<Mood>(Mood.Happy);
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -34,7 +34,7 @@ export default function MoodifyPlaylistCreator() {
   useSetTracks(
     setPlayerTracks,
     selectedMood,
-    [trackChanged],
+    [isTrackSelected],
     savePlayerTracksMood
   );
   useSetTracks(setPlaylistTracks, selectedMood, [
@@ -47,8 +47,8 @@ export default function MoodifyPlaylistCreator() {
   }, [shouldRefreshPlaylists]);
 
   useEffect(() => {
-    if (trackChanged) setTrackChanged(false);
-  }, [trackChanged]);
+    if (isTrackSelected) setIsTrackSelected(false);
+  }, [isTrackSelected]);
 
   const changeMood = (mood: Mood) => {
     setSelectedMood(mood);
@@ -65,8 +65,8 @@ export default function MoodifyPlaylistCreator() {
           isPlaying,
           setIsPlaying,
           audioRef,
-          trackChanged,
-          setTrackChanged,
+          isTrackSelected,
+          setIsTrackSelected,
         }}
       >
         <MoodContext.Provider
@@ -81,6 +81,7 @@ export default function MoodifyPlaylistCreator() {
           <Playlist
             tracks={playlistTracks}
             playlistMood={selectedMood}
+            playerMood={playerTracksMood}
             currentPlayingTrackId={currentPlayingTrackId}
           />
         </MoodContext.Provider>
