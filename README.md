@@ -1,3 +1,23 @@
+# Install Project 
+
+- Run <b>npm install</b> 
+- Start the app with <b>npm run dev</b>.
+- Open http://localhost:5173/
+
+# Moodify Playlist Creator
+
+Playlists
+- The user can switch between different playlists by clicking on the Mood buttons below the player, next to 'Pick your mood'
+- The track can be played with a double click.
+
+Favourite playlist 
+- The user can add songs to the list of favorites by clicking on the 'Add to Favorites' button on every track.
+- Tracks can be removed from 'Favorites' by clicking on the 'Remove' button.
+
+Emojis
+- The user can change the playlist emoji by first choosing the playlist and then clicking on the emoji in the player which opens the emoji picker.
+
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
