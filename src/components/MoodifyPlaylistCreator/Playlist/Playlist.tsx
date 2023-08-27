@@ -1,5 +1,6 @@
 import {
   checkIsTrackInFavorites,
+  getNextTrackIndex,
   restartPlayback,
 } from "../../../assets/helpers";
 import { TrackContext } from "../../../context/TrackContext";
@@ -34,7 +35,9 @@ export default function Playlist({
     playlistMood === playerMood && trackId === currentPlayingTrackId;
 
   const hasTracks = !!tracks.length;
-
+  const playlistLength = tracks.length;
+  const favoritesHaveMoreThanOneTrack =
+    playlistMood === Mood.Favorites && tracks.length > 1;
   let lastClickTime = 0;
 
   const handleDoubleClick = (index: number) => {
@@ -66,10 +69,13 @@ export default function Playlist({
               title,
               listNumber: index + 1,
               isPlaying: checkIfSongIsPlaying(id),
-              mood: playlistMood,
+              playlistMood,
+              playerMood,
               onClick: () => handleDoubleClick(index),
               isInFavorites: checkIsTrackInFavorites(playlistMood, id),
               songIndex: index,
+              favoritesHaveMoreThanOneTrack,
+              playlistLength,
             }}
           />
         ))

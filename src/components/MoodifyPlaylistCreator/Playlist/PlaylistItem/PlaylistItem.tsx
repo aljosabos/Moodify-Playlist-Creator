@@ -3,9 +3,11 @@ import { BsFillTrashFill } from "react-icons/bs";
 import "./PlaylistItem.scss";
 import {
   getFavoriteTracksInfo,
+  getNextTrackIndex,
   saveFavoriteTracksInfo,
+  stopPlayback,
 } from "../../../../assets/helpers";
-import { MouseEventHandler, useContext } from "react";
+import { useContext } from "react";
 import { TrackContext } from "../../../../context/TrackContext";
 import { Mood } from "../../../../types/types";
 import { BsFillStarFill } from "react-icons/bs";
@@ -20,8 +22,11 @@ interface IPlaylistItemProps {
   listNumber: number;
   isPlaying: boolean;
   onClick: (e: React.MouseEvent) => void;
-  mood: string;
+  playlistMood: string;
+  playerMood: string;
   isInFavorites: boolean;
+  favoritesHaveMoreThanOneTrack: boolean;
+  playlistLength: number;
 }
 
 export default function PlaylistItem({
@@ -31,42 +36,71 @@ export default function PlaylistItem({
   listNumber,
   isPlaying,
   onClick,
-  mood,
+  playlistMood,
+  playerMood,
   isInFavorites,
+  favoritesHaveMoreThanOneTrack,
+  playlistLength,
 }: IPlaylistItemProps) {
   const songPlaybackStyle = isPlaying ? "playback" : "";
 
-  const { setShouldRefreshPlaylists } = useContext(TrackContext);
+  const {
+    setShouldRefreshPlaylists,
+    currentTrackIndex,
+    setCurrentTrackIndex,
+    audioRef,
+    setIsPlaying,
+  } = useContext(TrackContext);
   const { isResized } = useIsResized(SMALL_WIDTH);
 
   const addToFavorites = () => {
     const favoriteTracksInfo = getFavoriteTracksInfo();
-    const updatedFavoriteTracksInfo = [...favoriteTracksInfo, { mood, id }];
+    const updatedFavoriteTracksInfo = [
+      ...favoriteTracksInfo,
+      { mood: playlistMood, id },
+    ];
 
     saveFavoriteTracksInfo(updatedFavoriteTracksInfo);
     setShouldRefreshPlaylists(true);
   };
 
-  const removeFromFavorites = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (isPlaying) return;
-    const favoriteTracksInfo = getFavoriteTracksInfo();
-
-    const filteredFavoriteTracksInfo = favoriteTracksInfo.filter(
-      (info) => info.id !== id
-    );
-    saveFavoriteTracksInfo(filteredFavoriteTracksInfo);
-    setShouldRefreshPlaylists(true);
+  const handleNoTrack = () => {
+    setCurrentTrackIndex(-1);
+    stopPlayback(audioRef);
+    setIsPlaying(false);
   };
 
-  const removeBtnModifier = isPlaying ? "--disabled" : "";
+  const handleNextTrack = () => {
+    const updatedIndex = getNextTrackIndex(currentTrackIndex, playlistLength);
+
+    setCurrentTrackIndex(updatedIndex);
+  };
+
+  const handlePlaybackAfterRemove = () => {
+    if (favoritesHaveMoreThanOneTrack) {
+      handleNextTrack();
+    } else if (playlistMood === playerMood) {
+      handleNoTrack();
+    }
+  };
+
+  const removeFromFavorites = (e: React.MouseEvent) => {
+    e.stopPropagation();
+
+    const favoriteTracksInfo = getFavoriteTracksInfo();
+
+    const updatedTracksInfo = favoriteTracksInfo.filter(
+      (info) => info.id !== id
+    );
+    saveFavoriteTracksInfo(updatedTracksInfo);
+    setShouldRefreshPlaylists(true);
+
+    handlePlaybackAfterRemove();
+  };
 
   const btnJSX =
-    mood === Mood.Favorites ? (
-      <button
-        onClick={removeFromFavorites}
-        className={`PlaylistItem-btn${removeBtnModifier}`}
-      >
+    playlistMood === Mood.Favorites ? (
+      <button onClick={removeFromFavorites} className="PlaylistItem-btn">
         <BsFillTrashFill />
         <span>Remove</span>
       </button>

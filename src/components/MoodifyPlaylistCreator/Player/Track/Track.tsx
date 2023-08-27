@@ -14,7 +14,7 @@ import PlaybackAnimation from "../PlaybackAnimation/PlaybackAnimation";
 import { TrackContext } from "../../../../context/TrackContext";
 
 interface ITrackProps {
-  currentTrack?: ITrack;
+  currentTrack?: ITrack | null;
   audioRef: MutableRefObject<HTMLAudioElement | null>;
   setTrackDuration: React.Dispatch<React.SetStateAction<number>>;
   progressBarRef: MutableRefObject<HTMLInputElement | null>;
@@ -75,7 +75,7 @@ export default function Track({
         </div>
         <div className="Track__info-text">
           <h1 className="Track__info-text-title">
-            {currentTrack?.title || "No favorite songs"}
+            {currentTrack?.title || "No song"}
           </h1>
           <p className="Track__info-text-author">
             {currentTrack?.author || "List is empty"}

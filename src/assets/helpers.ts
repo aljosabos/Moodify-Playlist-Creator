@@ -76,3 +76,20 @@ export const restartPlayback = (
     audioRef.current.play();
   }
 };
+
+export const stopPlayback = (
+  audioRef: MutableRefObject<HTMLAudioElement | null>
+) => {
+  if (audioRef.current) {
+    audioRef.current.pause();
+    audioRef.current.currentTime = 0;
+    audioRef.current.removeAttribute("src");
+    audioRef.current.load();
+  }
+};
+
+export const getNextTrackIndex = (
+  currentTrackIndex: number,
+  playlistLength: number
+): number =>
+  currentTrackIndex >= playlistLength - 1 ? 0 : currentTrackIndex + 1;

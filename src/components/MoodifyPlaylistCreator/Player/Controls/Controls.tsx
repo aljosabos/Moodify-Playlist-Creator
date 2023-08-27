@@ -21,8 +21,7 @@ import { IoMdVolumeHigh, IoMdVolumeOff, IoMdVolumeLow } from "react-icons/io";
 import { SKIP_TIME } from "../../../../assets/constants";
 import { useAutoPlayNextSong } from "../../../../hooks/useAutoPlayNextSong";
 import { TrackContext } from "../../../../context/TrackContext";
-import { restartPlayback } from "../../../../assets/helpers";
-import { duration } from "moment";
+import { getNextTrackIndex, restartPlayback } from "../../../../assets/helpers";
 
 interface IControlProps {
   progressBarRef: MutableRefObject<HTMLInputElement | null>;
@@ -104,20 +103,24 @@ export default function Controls({
     if (timeProgress) return restartPlayback(audioRef);
 
     if (currentTrackIndex === 0) {
-      let lastTrackIndex = playlistLength - 1;
+      const lastTrackIndex = playlistLength - 1;
       setCurrentTrackIndex(lastTrackIndex);
     } else {
       setCurrentTrackIndex((prev) => prev - 1);
     }
   };
 
-  const handleNextTrack = () => {
-    if (currentTrackIndex >= playlistLength - 1) {
-      setCurrentTrackIndex(0);
-    } else {
-      setCurrentTrackIndex((currentIndex) => currentIndex + 1);
-    }
-  };
+  const handleNextTrack = useCallback(() => {
+    // if (currentTrackIndex >= playlistLength - 1) {
+    //   setCurrentTrackIndex(0);
+    // } else {
+    //   setCurrentTrackIndex((currentIndex) => currentIndex + 1);
+    // }
+
+    const updatedIndex = getNextTrackIndex(currentTrackIndex, playlistLength);
+
+    setCurrentTrackIndex(updatedIndex);
+  }, [currentTrackIndex, playlistLength]);
 
   const handleChangeVolume = (e: ChangeEvent<HTMLInputElement>) => {
     setVolume(parseInt((e.target as HTMLInputElement).value));

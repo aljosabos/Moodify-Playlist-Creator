@@ -21,16 +21,18 @@ export default function Player({
 
   const [timeProgress, setTimeProgress] = useState(0);
   const [trackDuration, setTrackDuration] = useState(0);
-  const [currentTrack, setCurrentTrack] = useState<ITrack>();
+  const [currentTrack, setCurrentTrack] = useState<ITrack | null>(null);
 
   const progressBarRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
-    if (tracks) {
+    if (tracks.length) {
       const currentPlayingTrack = tracks[currentTrackIndex];
 
       setCurrentTrack(currentPlayingTrack);
       setCurrentPlayingTrackId(currentPlayingTrack?.id);
+    } else if (currentTrackIndex === -1) {
+      setCurrentTrack(null);
     }
   }, [tracks, currentTrackIndex]);
 
@@ -54,7 +56,7 @@ export default function Player({
             trackDuration,
             setTimeProgress,
             playlistLength: tracks?.length,
-            timeProgress
+            timeProgress,
           }}
         />
         <ProgressBar

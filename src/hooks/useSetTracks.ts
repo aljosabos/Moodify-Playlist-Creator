@@ -20,5 +20,5 @@ export const useSetTracks = (
       setState(favoriteTracks);
       if (callback) callback(Mood.Favorites);
     }
-  }, [...dependencies]);
+  }, dependencies);
 };
