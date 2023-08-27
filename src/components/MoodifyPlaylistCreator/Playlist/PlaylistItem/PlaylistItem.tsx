@@ -71,9 +71,13 @@ export default function PlaylistItem({
     setIsPlaying(false);
   };
 
-  const handlePlaybackAfterRemove = () => {
+  const handlePlaybackAfterRemove = (isLastTrackRemoved: boolean) => {
     if (favoritesHaveMoreThanOneTrack) {
-      setCurrentTrackIndex(currentTrackIndex + 1);
+      if (isLastTrackRemoved) {
+        setCurrentTrackIndex(0);
+      } else {
+        setCurrentTrackIndex(currentTrackIndex + 1);
+      }
     } else if (playlistMood === playerMood) {
       handleNoTrack();
     }
@@ -81,6 +85,8 @@ export default function PlaylistItem({
 
   const removeFromFavorites = (e: React.MouseEvent) => {
     e.stopPropagation();
+
+    console.log(listNumber - 1);
 
     const favoriteTracksInfo = getFavoriteTracksInfo();
 
@@ -93,8 +99,9 @@ export default function PlaylistItem({
     console.log(playlistLength);
 
     const isPlayingTrackRemoved = id === currentPlayingTrackId;
+    const isLastTrackRemoved = playlistLength - 1 === listNumber - 1;
 
-    if (isPlayingTrackRemoved) handlePlaybackAfterRemove();
+    if (isPlayingTrackRemoved) handlePlaybackAfterRemove(isLastTrackRemoved);
   };
 
   const btnJSX =
