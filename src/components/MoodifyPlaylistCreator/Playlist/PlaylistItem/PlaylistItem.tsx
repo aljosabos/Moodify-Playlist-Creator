@@ -71,14 +71,9 @@ export default function PlaylistItem({
     setIsPlaying(false);
   };
 
-  const handleNextTrack = () => {
-    const updatedIndex = getNextTrackIndex(currentTrackIndex, playlistLength);
-    setCurrentTrackIndex(updatedIndex);
-  };
-
   const handlePlaybackAfterRemove = () => {
     if (favoritesHaveMoreThanOneTrack) {
-      handleNextTrack();
+      setCurrentTrackIndex(currentTrackIndex + 1);
     } else if (playlistMood === playerMood) {
       handleNoTrack();
     }
@@ -94,6 +89,8 @@ export default function PlaylistItem({
     );
     saveFavoriteTracksInfo(updatedTracksInfo);
     setShouldRefreshPlaylists(true);
+
+    console.log(playlistLength);
 
     const isPlayingTrackRemoved = id === currentPlayingTrackId;
 
