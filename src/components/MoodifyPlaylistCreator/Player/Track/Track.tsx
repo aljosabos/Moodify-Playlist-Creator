@@ -12,6 +12,8 @@ import { MoodContext } from "../../../../context/MoodContext";
 import useOutsideClick from "../../../../hooks/useOutsideClick";
 import PlaybackAnimation from "../PlaybackAnimation/PlaybackAnimation";
 import { TrackContext } from "../../../../context/TrackContext";
+import { IoIosMusicalNotes } from "react-icons/io";
+import { BsMusicNoteBeamed } from "react-icons/bs";
 
 interface ITrackProps {
   currentTrack?: ITrack | null;
@@ -59,23 +61,28 @@ export default function Track({
   return (
     <div className="Track">
       <audio
-        src={currentTrack && currentTrack.src}
+        src={currentTrack?.src}
         ref={audioRef}
         onLoadedMetadata={onLoadedMetadata}
       />
       <div className="Track__info">
-        <div className="audio-image">
-          {currentTrack?.cover && (
-            <img
-              src={currentTrack?.cover}
-              alt="audio avatar"
-              className="Track__info-cover"
-            />
-          )}
-        </div>
+        {currentTrack?.cover ? (
+          <img
+            src={currentTrack?.cover}
+            alt="audio avatar"
+            className="Track__info-cover"
+          />
+        ) : (
+          <div className="Track__info-no-cover">
+            <span className="Track__info-no-cover-icon">
+              <BsMusicNoteBeamed />
+            </span>
+          </div>
+        )}
+
         <div className="Track__info-text">
           <h1 className="Track__info-text-title">
-            {currentTrack?.title || "No song"}
+            {currentTrack?.title || "No songs"}
           </h1>
           <p className="Track__info-text-author">
             {currentTrack?.author || "List is empty"}
