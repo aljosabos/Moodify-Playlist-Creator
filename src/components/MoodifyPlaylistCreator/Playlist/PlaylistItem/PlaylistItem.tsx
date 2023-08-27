@@ -3,7 +3,6 @@ import { BsFillTrashFill } from "react-icons/bs";
 import "./PlaylistItem.scss";
 import {
   getFavoriteTracksInfo,
-  getNextTrackIndex,
   saveFavoriteTracksInfo,
   stopPlayback,
 } from "../../../../assets/helpers";
