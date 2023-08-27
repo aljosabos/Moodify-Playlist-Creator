@@ -86,8 +86,6 @@ export default function PlaylistItem({
   const removeFromFavorites = (e: React.MouseEvent) => {
     e.stopPropagation();
 
-    console.log(listNumber - 1);
-
     const favoriteTracksInfo = getFavoriteTracksInfo();
 
     const updatedTracksInfo = favoriteTracksInfo.filter(
@@ -96,10 +94,10 @@ export default function PlaylistItem({
     saveFavoriteTracksInfo(updatedTracksInfo);
     setShouldRefreshPlaylists(true);
 
-    console.log(playlistLength);
-
     const isPlayingTrackRemoved = id === currentPlayingTrackId;
-    const isLastTrackRemoved = playlistLength - 1 === listNumber - 1;
+    const lastPlaylistTrackIndex = playlistLength - 1;
+    const trackIndex = listNumber - 1;
+    const isLastTrackRemoved = lastPlaylistTrackIndex === trackIndex;
 
     if (isPlayingTrackRemoved) handlePlaybackAfterRemove(isLastTrackRemoved);
   };
