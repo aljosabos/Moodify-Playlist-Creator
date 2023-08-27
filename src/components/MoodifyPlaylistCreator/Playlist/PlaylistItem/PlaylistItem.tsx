@@ -50,6 +50,7 @@ export default function PlaylistItem({
     setCurrentTrackIndex,
     audioRef,
     setIsPlaying,
+    currentPlayingTrackId,
   } = useContext(TrackContext);
   const { isResized } = useIsResized(SMALL_WIDTH);
 
@@ -94,7 +95,9 @@ export default function PlaylistItem({
     saveFavoriteTracksInfo(updatedTracksInfo);
     setShouldRefreshPlaylists(true);
 
-    handlePlaybackAfterRemove();
+    const isPlayingTrackRemoved = id === currentPlayingTrackId;
+
+    if (isPlayingTrackRemoved) handlePlaybackAfterRemove();
   };
 
   const btnJSX =

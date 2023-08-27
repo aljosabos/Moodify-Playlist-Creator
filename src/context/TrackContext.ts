@@ -10,6 +10,7 @@ export interface ITrackContext {
   audioRef: MutableRefObject<HTMLAudioElement | null>;
   isTrackSelected: boolean;
   setIsTrackSelected: React.Dispatch<React.SetStateAction<boolean>>;
+  currentPlayingTrackId: string;
 }
 
 export const TrackContext = createContext({} as ITrackContext);

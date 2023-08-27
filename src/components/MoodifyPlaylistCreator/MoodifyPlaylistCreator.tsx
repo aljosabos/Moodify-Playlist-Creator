@@ -67,6 +67,7 @@ export default function MoodifyPlaylistCreator() {
           audioRef,
           isTrackSelected,
           setIsTrackSelected,
+          currentPlayingTrackId
         }}
       >
         <MoodContext.Provider
