@@ -1,4 +1,19 @@
 .Playlist {
   height: 300px;
   overflow: auto;
+
+  &-noTracks {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    border-top: 2px solid white;
+    border-bottom: 2px solid white;
+    padding: 10px;
+    align-items: flex-end;
+    gap: 10px;
+
+    svg {
+      font-size: 28px;
+    }
+  }
 }

@@ -6,6 +6,7 @@ import { TrackContext } from "../../../context/TrackContext";
 import { ITrack, Mood } from "../../../types/types";
 import PlaylistItem from "./PlaylistItem/PlaylistItem";
 import { useContext } from "react";
+import { FaItunesNote } from "react-icons/fa";
 import "./Playlist.scss";
 
 interface IPlaylistProps {
@@ -32,6 +33,8 @@ export default function Playlist({
   const checkIfSongIsPlaying = (trackId: string) =>
     playlistMood === playerMood && trackId === currentPlayingTrackId;
 
+  const hasTracks = !!tracks.length;
+
   let lastClickTime = 0;
 
   const handleDoubleClick = (index: number) => {
@@ -53,22 +56,29 @@ export default function Playlist({
 
   return (
     <div className="Playlist">
-      {tracks?.map(({ author, title, id }, index) => (
-        <PlaylistItem
-          key={id}
-          {...{
-            id,
-            author,
-            title,
-            listNumber: index + 1,
-            isPlaying: checkIfSongIsPlaying(id),
-            mood: playlistMood,
-            onClick: () => handleDoubleClick(index),
-            isInFavorites: checkIsTrackInFavorites(playlistMood, id),
-            songIndex: index,
-          }}
-        />
-      ))}
+      {hasTracks ? (
+        tracks.map(({ author, title, id }, index) => (
+          <PlaylistItem
+            key={id}
+            {...{
+              id,
+              author,
+              title,
+              listNumber: index + 1,
+              isPlaying: checkIfSongIsPlaying(id),
+              mood: playlistMood,
+              onClick: () => handleDoubleClick(index),
+              isInFavorites: checkIsTrackInFavorites(playlistMood, id),
+              songIndex: index,
+            }}
+          />
+        ))
+      ) : (
+        <div className="Playlist-noTracks">
+          <span>No Tracks, add some from the moods</span>
+          <FaItunesNote />
+        </div>
+      )}
     </div>
   );
 }
