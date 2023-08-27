@@ -12,7 +12,6 @@ import { MoodContext } from "../../../../context/MoodContext";
 import useOutsideClick from "../../../../hooks/useOutsideClick";
 import PlaybackAnimation from "../PlaybackAnimation/PlaybackAnimation";
 import { TrackContext } from "../../../../context/TrackContext";
-import { IoIosMusicalNotes } from "react-icons/io";
 import { BsMusicNoteBeamed } from "react-icons/bs";
 
 interface ITrackProps {
