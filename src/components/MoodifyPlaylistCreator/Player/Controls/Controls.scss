@@ -9,7 +9,7 @@
   &__content {
     width: 260px;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
 
     @include x-sm {
       width: 230px;
