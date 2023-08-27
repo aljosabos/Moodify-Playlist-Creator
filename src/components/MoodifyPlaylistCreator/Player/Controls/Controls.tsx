@@ -27,7 +27,6 @@ import {
   restartPlayback,
   updateProgressBarWithTimeAndDuration,
 } from "../../../../assets/helpers";
-import { duration } from "moment";
 
 interface IControlProps {
   progressBarRef: MutableRefObject<HTMLInputElement | null>;
@@ -51,9 +50,33 @@ export default function Controls({
 
   const trackProgressAnimationRef = useRef<number | null>();
 
+  const volumeIconJSX =
+    muteVolume || volume < 5 ? (
+      <IoMdVolumeOff />
+    ) : volume < 40 ? (
+      <IoMdVolumeLow />
+    ) : (
+      <IoMdVolumeHigh />
+    );
+
   const { currentTrackIndex, setCurrentTrackIndex } = useContext(TrackContext);
 
   const { isPlaying, setIsPlaying } = useContext(TrackContext);
+
+  const toogleTrackPlayback = useCallback(() => {
+    if (isPlaying && audioRef.current) {
+      audioRef.current.play();
+    } else if (audioRef.current) {
+      audioRef.current.pause();
+    }
+  }, [isPlaying]);
+
+  const handleVolume = useCallback(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = volume / 100;
+      audioRef.current.muted = muteVolume;
+    }
+  }, [volume, muteVolume]);
 
   const step = useCallback(() => {
     const currentTime = getTrackCurrentTime(audioRef);
@@ -68,25 +91,11 @@ export default function Controls({
     trackProgressAnimationRef.current = requestAnimationFrame(step);
   }, [audioRef, trackDuration, progressBarRef, setTimeProgress]);
 
-  const togglePlay = () => {
+  const togglePlayState = () => {
     setIsPlaying((currentState) => !currentState);
   };
 
-  useEffect(() => {
-    if (isPlaying && audioRef.current) {
-      audioRef.current.play();
-    } else if (audioRef.current) {
-      audioRef.current.pause();
-    }
-    trackProgressAnimationRef.current = requestAnimationFrame(step);
-  }, [isPlaying, step, audioRef, currentTrackIndex]);
-
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.volume = volume / 100;
-      audioRef.current.muted = muteVolume;
-    }
-  }, [volume, audioRef, muteVolume]);
+  /* HANDLER FUNCTIONS */
 
   const skipForward = () => {
     if (audioRef.current) audioRef.current.currentTime += SKIP_TIME;
@@ -120,16 +129,19 @@ export default function Controls({
     setMuteVolume((currentState) => !currentState);
   };
 
-  const volumeIcon =
-    muteVolume || volume < 5 ? (
-      <IoMdVolumeOff />
-    ) : volume < 40 ? (
-      <IoMdVolumeLow />
-    ) : (
-      <IoMdVolumeHigh />
-    );
-
   useAutoPlayNextSong(audioRef, handleNextTrack, currentTrackIndex);
+
+  /* USE EFFECTS */
+
+  useEffect(() => {
+    toogleTrackPlayback();
+
+    trackProgressAnimationRef.current = requestAnimationFrame(step);
+  }, [isPlaying, step, audioRef, currentTrackIndex, toogleTrackPlayback]);
+
+  useEffect(() => {
+    handleVolume();
+  }, [handleVolume]);
 
   return (
     <div className="Controls">
@@ -141,7 +153,7 @@ export default function Controls({
           <IoPlayBackSharp />
         </button>
 
-        <button onClick={togglePlay}>
+        <button onClick={togglePlayState}>
           {isPlaying ? <IoPauseSharp /> : <IoPlaySharp />}
         </button>
         <button onClick={skipForward}>
@@ -154,7 +166,7 @@ export default function Controls({
 
       <div className="Controls__volume">
         <button onClick={toggleMuteVolume} className="Controls__volume-btn">
-          {volumeIcon}
+          {volumeIconJSX}
         </button>
 
         <input
