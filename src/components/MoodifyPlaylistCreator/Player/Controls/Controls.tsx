@@ -111,12 +111,6 @@ export default function Controls({
   };
 
   const handleNextTrack = useCallback(() => {
-    // if (currentTrackIndex >= playlistLength - 1) {
-    //   setCurrentTrackIndex(0);
-    // } else {
-    //   setCurrentTrackIndex((currentIndex) => currentIndex + 1);
-    // }
-
     const updatedIndex = getNextTrackIndex(currentTrackIndex, playlistLength);
 
     setCurrentTrackIndex(updatedIndex);

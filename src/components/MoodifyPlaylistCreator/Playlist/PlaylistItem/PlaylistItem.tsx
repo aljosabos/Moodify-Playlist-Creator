@@ -72,7 +72,6 @@ export default function PlaylistItem({
 
   const handleNextTrack = () => {
     const updatedIndex = getNextTrackIndex(currentTrackIndex, playlistLength);
-
     setCurrentTrackIndex(updatedIndex);
   };
 
