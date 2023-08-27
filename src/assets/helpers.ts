@@ -93,3 +93,26 @@ export const getNextTrackIndex = (
   playlistLength: number
 ): number =>
   currentTrackIndex >= playlistLength - 1 ? 0 : currentTrackIndex + 1;
+
+export const updateProgressBarWithTimeAndDuration = (
+  progressBarRef: MutableRefObject<HTMLInputElement | null>,
+  currentTime: number,
+  trackDuration: number
+) => {
+  if (progressBarRef.current) {
+    (progressBarRef.current as HTMLInputElement).value = currentTime.toString();
+
+    progressBarRef.current.style.setProperty(
+      "--range-progress",
+      `${
+        (parseInt((progressBarRef.current as HTMLInputElement).value) /
+          trackDuration) *
+        100
+      }%`
+    );
+  }
+};
+
+export const getTrackCurrentTime = (
+  audioRef: MutableRefObject<HTMLAudioElement | null>
+) => (audioRef.current ? Math.floor(audioRef.current.currentTime) : 0);

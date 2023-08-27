@@ -21,7 +21,13 @@ import { IoMdVolumeHigh, IoMdVolumeOff, IoMdVolumeLow } from "react-icons/io";
 import { SKIP_TIME } from "../../../../assets/constants";
 import { useAutoPlayNextSong } from "../../../../hooks/useAutoPlayNextSong";
 import { TrackContext } from "../../../../context/TrackContext";
-import { getNextTrackIndex, restartPlayback } from "../../../../assets/helpers";
+import {
+  getNextTrackIndex,
+  getTrackCurrentTime,
+  restartPlayback,
+  updateProgressBarWithTimeAndDuration,
+} from "../../../../assets/helpers";
+import { duration } from "moment";
 
 interface IControlProps {
   progressBarRef: MutableRefObject<HTMLInputElement | null>;
@@ -43,33 +49,23 @@ export default function Controls({
   const [volume, setVolume] = useState(60);
   const [muteVolume, setMuteVolume] = useState(false);
 
-  const playAnimationRef = useRef<number | null>();
+  const trackProgressAnimationRef = useRef<number | null>();
 
   const { currentTrackIndex, setCurrentTrackIndex } = useContext(TrackContext);
 
   const { isPlaying, setIsPlaying } = useContext(TrackContext);
 
   const step = useCallback(() => {
-    const currentTime = audioRef.current
-      ? Math.floor(audioRef.current.currentTime)
-      : 0;
-
+    const currentTime = getTrackCurrentTime(audioRef);
     setTimeProgress(currentTime);
 
-    if (progressBarRef.current) {
-      (progressBarRef.current as HTMLInputElement).value =
-        currentTime.toString();
+    updateProgressBarWithTimeAndDuration(
+      progressBarRef,
+      currentTime,
+      trackDuration
+    );
 
-      progressBarRef.current.style.setProperty(
-        "--range-progress",
-        `${
-          (parseInt((progressBarRef.current as HTMLInputElement).value) /
-            trackDuration) *
-          100
-        }%`
-      );
-    }
-    playAnimationRef.current = requestAnimationFrame(step);
+    trackProgressAnimationRef.current = requestAnimationFrame(step);
   }, [audioRef, trackDuration, progressBarRef, setTimeProgress]);
 
   const togglePlay = () => {
@@ -82,7 +78,7 @@ export default function Controls({
     } else if (audioRef.current) {
       audioRef.current.pause();
     }
-    playAnimationRef.current = requestAnimationFrame(step);
+    trackProgressAnimationRef.current = requestAnimationFrame(step);
   }, [isPlaying, step, audioRef, currentTrackIndex]);
 
   useEffect(() => {
