@@ -1,6 +1,5 @@
 import {
   checkIsTrackInFavorites,
-  getNextTrackIndex,
   restartPlayback,
 } from "../../../assets/helpers";
 import { TrackContext } from "../../../context/TrackContext";
